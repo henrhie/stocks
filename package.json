@@ -1,19 +1,25 @@
 {
-  "name": "portal",
-  "version": "1.0.0",
-  "description": "backend for portal",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "node"
-  ],
-  "author": "Henry Ansah",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongodb": "^4.2.1",
-    "mongoose": "^6.1.0"
-  }
+	"name": "portal",
+	"version": "1.0.0",
+	"description": "backend for portal",
+	"main": "dist/index.js",
+	"scripts": {
+		"start": "ts-node index.ts"
+	},
+	"keywords": [
+		"node"
+	],
+	"author": "Henry Ansah",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1",
+		"mongodb": "^4.2.1",
+		"mongoose": "^6.1.0"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.13",
+		"@types/mongodb": "^4.0.7",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.2"
+	}
 }
