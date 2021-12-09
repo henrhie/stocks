@@ -1,0 +1,19 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "backend for portal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Henry Ansah",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^4.2.1",
+    "mongoose": "^6.1.0"
+  }
+}
