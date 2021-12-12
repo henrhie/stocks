@@ -14,3 +14,5 @@ router.delete(
 		res.send(equipment);
 	}
 );
+
+export { router as DeleteRouter };

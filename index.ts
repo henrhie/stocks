@@ -1,10 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { currentUser } from './services/current-user';
-import { SignupRouter } from './routes/signup';
-import { SigninRouter } from './routes/signin';
-import { SignoutRouter } from './routes/signout';
+import { currentUserRouter } from './routes/auth/current-user';
+import { SignupRouter } from './routes/auth/signup';
+import { SigninRouter } from './routes/auth/signin';
+import { SignoutRouter } from './routes/auth/signout';
+import { AddRouter } from './routes/equipment/add';
+import { DeleteRouter } from './routes/equipment/delete';
+import { DeleteValueRouter } from './routes/equipment/delete-value';
+import { UpdateRouter } from './routes/equipment/update';
 
 const app = express();
 
@@ -16,10 +20,15 @@ app.use(
 	})
 );
 
-app.use(currentUser);
+app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SigninRouter);
 app.use(SignoutRouter);
+
+app.use(AddRouter);
+app.use(DeleteRouter);
+app.use(DeleteValueRouter);
+app.use(UpdateRouter);
 
 const PORT = 3000;
 const MONGODB_URL =

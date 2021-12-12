@@ -29,4 +29,4 @@ router.put(
 	}
 );
 
-export { router as EquipmentUpdateRouter };
+export { router as UpdateRouter };
