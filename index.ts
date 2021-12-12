@@ -23,7 +23,7 @@ app.use(SignoutRouter);
 
 const PORT = 3000;
 const MONGODB_URL =
-	'mongodb+srv://henrhie35:Extreme-35@cluster0.1tgyg.mongodb.net/portaldb?retryWrites=true&w=majority';
+	'mongodb+srv://henrhie35:Tensorflow-35@cluster0.1tgyg.mongodb.net/portaldb?retryWrites=true&w=majority';
 
 mongoose
 	.connect(MONGODB_URL)
