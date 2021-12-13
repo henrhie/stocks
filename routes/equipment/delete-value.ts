@@ -11,8 +11,7 @@ router.delete(
 		if (!equipment) {
 			throw new Error('equipment not found');
 		}
-		const equipmentObj = equipment.toObject();
-		equipment.set({ ...equipmentObj, [field_name]: undefined });
+		equipment.set(field_name, undefined, { strict: false });
 		await equipment.save();
 		res.send(equipment);
 	}

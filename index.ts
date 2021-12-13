@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
 import { currentUser } from './services/current-user';
-import { SignupRouter } from './routes/signup';
-import { SigninRouter } from './routes/signin';
-import { SignoutRouter } from './routes/signout';
+import { SignupRouter } from './routes/auth/signup';
+import { SigninRouter } from './routes/auth/signin';
+import { SignoutRouter } from './routes/auth/signout';
 
 const app = express();
 
