@@ -26,5 +26,4 @@ router.post(
 		res.status(201).send(equipment);
 	}
 );
-
 export { router as addRouter };

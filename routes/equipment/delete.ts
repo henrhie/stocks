@@ -15,4 +15,8 @@ router.delete(
 	}
 );
 
+<<<<<<< HEAD
 export { router as deleteRouter };
+=======
+export { router as DeleteRouter };
+>>>>>>> 737c6f2fe1137cb9008f10cb618b8f28c58ef261
