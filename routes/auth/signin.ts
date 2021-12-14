@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import { Password } from '../../services/password';
 import { User } from '../../models/user';
-import token from '../../env/jwt_key';
+import { token } from '../../env/secrets';
 
 interface ReqBody {
 	email: string;

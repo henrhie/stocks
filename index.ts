@@ -1,13 +1,12 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose = require('mongoose');
 import cookieSession from 'cookie-session';
-import { currentUserRouter } from './routes/auth/current-user';
-import { SignupRouter } from './routes/auth/signup';
-import { SigninRouter } from './routes/auth/signin';
-import { SignoutRouter } from './routes/auth/signout';
-import { AddRouter } from './routes/equipment/add';
-import { DeleteRouter } from './routes/equipment/delete';
-import { UpdateRouter } from './routes/equipment/update';
+
+import { addRouter } from './routes/equipment/add';
+import { updateRouter } from './routes/equipment/update';
+import { deleteRouter } from './routes/equipment/delete';
+
+import { mongoURL } from './env/secrets';
 
 const app = express();
 
@@ -19,21 +18,14 @@ app.use(
 	})
 );
 
-app.use(currentUserRouter);
-app.use(SignupRouter);
-app.use(SigninRouter);
-app.use(SignoutRouter);
-
-app.use(AddRouter);
-app.use(DeleteRouter);
-app.use(UpdateRouter);
+app.use(addRouter);
+app.use(updateRouter);
+app.use(deleteRouter);
 
 const PORT = 3000;
-const MONGODB_URL =
-	'mongodb+srv://henrhie35:Tensorflow-35@cluster0.1tgyg.mongodb.net/portaldb?retryWrites=true&w=majority';
 
 mongoose
-	.connect(MONGODB_URL)
+	.connect(mongoURL)
 	.then(() => {
 		console.log('connected to database');
 		app.listen(PORT, () => {

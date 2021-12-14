@@ -1,7 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose = require('mongoose');
 
 interface attrType {
 	name: string;
+	date: string;
 	current_l1?: number;
 	current_l2?: number;
 	current_l3?: number;
@@ -17,6 +18,7 @@ interface EquipmentModel extends mongoose.Model<EquipmentDocument> {
 
 interface EquipmentDocument extends mongoose.Document {
 	name: string;
+	date: string;
 	current_l1?: number;
 	current_l2?: number;
 	current_l3?: number;
@@ -28,6 +30,7 @@ interface EquipmentDocument extends mongoose.Document {
 
 const equipmentSchema = new mongoose.Schema({
 	name: { type: String, required: true },
+	date: String,
 	current_l1: Number,
 	current_l2: Number,
 	current_l3: Number,

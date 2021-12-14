@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose = require('mongoose');
 
 import { Password } from '../services/password';
 
