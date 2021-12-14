@@ -8,7 +8,12 @@ const router = express.Router();
 
 router.get('/api/equipment/csv', async (req: Request, res: Response) => {
 	const equipment = await Equipment.find({});
-	const csvFile = generateCsv(equipment);
+	const _equipment_ = equipment.map((doc) => {
+		const row = doc.toObject();
+		delete row.__v;
+		return row;
+	});
+	const csvFile = generateCsv(_equipment_);
 	writeFile('splunk.data.csv', csvFile, function (err) {
 		if (err) {
 			return res.status(501).send('bad file!');
@@ -17,4 +22,4 @@ router.get('/api/equipment/csv', async (req: Request, res: Response) => {
 	});
 });
 
-export { router as deleteRouter };
+export { router as csvRouter };

@@ -4,7 +4,7 @@ import { Equipment } from '../../models/equipment';
 const router = express.Router();
 
 interface ReqBody {
-	name: string;
+	equipment_name: string;
 	current_l1?: number;
 	current_l2?: number;
 	current_l3?: number;
@@ -22,8 +22,14 @@ router.post(
 			...req.body,
 			date: date.toLocaleDateString('en-GB'),
 		});
-		await equipment.save();
-		res.status(201).send(equipment);
+		equipment
+			.save()
+			.then(() => {
+				return res.status(201).send(equipment);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}
 );
 export { router as addRouter };

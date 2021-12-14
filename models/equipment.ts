@@ -1,7 +1,7 @@
 import mongoose = require('mongoose');
 
 interface attrType {
-	name: string;
+	equipment_name: string;
 	date: string;
 	current_l1?: number;
 	current_l2?: number;
@@ -17,7 +17,7 @@ interface EquipmentModel extends mongoose.Model<EquipmentDocument> {
 }
 
 interface EquipmentDocument extends mongoose.Document {
-	name: string;
+	equipment_name: string;
 	date: string;
 	current_l1?: number;
 	current_l2?: number;
@@ -29,7 +29,7 @@ interface EquipmentDocument extends mongoose.Document {
 }
 
 const equipmentSchema = new mongoose.Schema({
-	name: { type: String, required: true },
+	equipment_name: { type: String, required: true },
 	date: String,
 	current_l1: Number,
 	current_l2: Number,

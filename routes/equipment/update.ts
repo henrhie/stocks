@@ -4,7 +4,7 @@ import { Equipment } from '../../models/equipment';
 const router = express.Router();
 
 interface ReqBody {
-	name: string;
+	name?: string;
 	current_l1?: number;
 	current_l2?: number;
 	current_l3?: number;

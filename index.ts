@@ -5,6 +5,7 @@ import cookieSession from 'cookie-session';
 import { addRouter } from './routes/equipment/add';
 import { updateRouter } from './routes/equipment/update';
 import { deleteRouter } from './routes/equipment/delete';
+import { csvRouter } from './routes/equipment/csv';
 
 import { mongoURL } from './env/secrets';
 
@@ -21,6 +22,7 @@ app.use(
 app.use(addRouter);
 app.use(updateRouter);
 app.use(deleteRouter);
+app.use(csvRouter);
 
 const PORT = 3000;
 
