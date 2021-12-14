@@ -7,7 +7,6 @@ import { SigninRouter } from './routes/auth/signin';
 import { SignoutRouter } from './routes/auth/signout';
 import { AddRouter } from './routes/equipment/add';
 import { DeleteRouter } from './routes/equipment/delete';
-import { DeleteValueRouter } from './routes/equipment/delete-value';
 import { UpdateRouter } from './routes/equipment/update';
 
 const app = express();
@@ -27,7 +26,6 @@ app.use(SignoutRouter);
 
 app.use(AddRouter);
 app.use(DeleteRouter);
-app.use(DeleteValueRouter);
 app.use(UpdateRouter);
 
 const PORT = 3000;
