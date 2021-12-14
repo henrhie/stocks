@@ -4,13 +4,15 @@ import { Equipment } from '../../models/equipment';
 const router = express.Router();
 
 router.delete(
-	'/api/equipment/:name',
-	async (req: Request<{ name: string }>, res: Response) => {
-		const { name } = req.params;
-		const equipment = await Equipment.deleteOne({ name });
+	'/api/equipment/:date/:name',
+	async (req: Request<{ name: string; date: string }>, res: Response) => {
+		const { name, date } = req.params;
+		const equipment = await Equipment.deleteOne({ name, date });
 		if (!equipment) {
 			throw new Error('could not find equipment to delete');
 		}
 		res.send(equipment);
 	}
 );
+
+export { router as deleteRouter };

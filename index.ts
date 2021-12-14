@@ -1,10 +1,12 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose = require('mongoose');
 import cookieSession from 'cookie-session';
-import { currentUser } from './services/current-user';
-import { SignupRouter } from './routes/auth/signup';
-import { SigninRouter } from './routes/auth/signin';
-import { SignoutRouter } from './routes/auth/signout';
+
+import { addRouter } from './routes/equipment/add';
+import { updateRouter } from './routes/equipment/update';
+import { deleteRouter } from './routes/equipment/delete';
+
+import { mongoURL } from './env/secrets';
 
 const app = express();
 
@@ -16,17 +18,14 @@ app.use(
 	})
 );
 
-app.use(currentUser);
-app.use(SignupRouter);
-app.use(SigninRouter);
-app.use(SignoutRouter);
+app.use(addRouter);
+app.use(updateRouter);
+app.use(deleteRouter);
 
 const PORT = 3000;
-const MONGODB_URL =
-	'mongodb+srv://henrhie35:Extreme-35@cluster0.1tgyg.mongodb.net/portaldb?retryWrites=true&w=majority';
 
 mongoose
-	.connect(MONGODB_URL)
+	.connect(mongoURL)
 	.then(() => {
 		console.log('connected to database');
 		app.listen(PORT, () => {

@@ -15,10 +15,13 @@ interface ReqBody {
 }
 
 router.put(
-	'/api/equipment/:name',
-	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
-		const { name } = req.params;
-		const equipment = await Equipment.findOne({ name });
+	'/api/equipment/:date/:name',
+	async (
+		req: Request<{ name: string; date: string }, {}, ReqBody>,
+		res: Response
+	) => {
+		const { name, date } = req.params;
+		const equipment = await Equipment.findOne({ name, date });
 		if (!equipment) {
 			throw new Error('equipment does not exist');
 		}
@@ -29,4 +32,4 @@ router.put(
 	}
 );
 
-export { router as EquipmentUpdateRouter };
+export { router as updateRouter };

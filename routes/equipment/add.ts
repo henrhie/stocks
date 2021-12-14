@@ -17,8 +17,14 @@ interface ReqBody {
 router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const equipment = Equipment.build({ ...req.body });
+		const date = new Date();
+		const equipment = Equipment.build({
+			...req.body,
+			date: date.toLocaleDateString('en-GB'),
+		});
 		await equipment.save();
 		res.status(201).send(equipment);
 	}
 );
+
+export { router as addRouter };

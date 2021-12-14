@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import token from '../env/jwt_key';
+import { token } from '../env/secrets';
 
 interface UserPayload {
 	name: string;

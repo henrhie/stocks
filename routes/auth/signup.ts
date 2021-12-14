@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { User } from '../../models/user';
-import token from '../../env/jwt_key';
+import { token } from '../../env/secrets';
 
 interface ReqBody {
 	name: string;
