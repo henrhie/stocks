@@ -8,8 +8,13 @@ import { deleteRouter } from './routes/equipment/delete';
 import { csvRouter } from './routes/equipment/csv';
 
 import { mongoURL } from './env/secrets';
+import { showRouter } from './routes/equipment/show';
+
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(
@@ -23,8 +28,9 @@ app.use(addRouter);
 app.use(updateRouter);
 app.use(deleteRouter);
 app.use(csvRouter);
+app.use(showRouter);
 
-const PORT = 3000;
+const PORT = 8080;
 
 mongoose
 	.connect(mongoURL)

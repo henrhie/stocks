@@ -18,10 +18,16 @@ router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		const date = new Date();
+		const _date = date
+			.toLocaleDateString('en-GB')
+			.replace('/', '-')
+			.replace('/', '-');
 		const equipment = Equipment.build({
 			...req.body,
-			date: date.toLocaleDateString('en-GB'),
+			date: _date,
 		});
+
+		console.log('serve hit');
 		equipment
 			.save()
 			.then(() => {
