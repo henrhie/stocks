@@ -17,14 +17,13 @@ interface ReqBody {
 router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const date = new Date();
-		const _date = date
+		const date = new Date()
 			.toLocaleDateString('en-GB')
 			.replace('/', '-')
 			.replace('/', '-');
 		const equipment = Equipment.build({
 			...req.body,
-			date: _date,
+			date,
 		});
 
 		console.log('serve hit');
