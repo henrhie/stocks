@@ -37,7 +37,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -49,7 +49,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -61,7 +61,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -73,7 +73,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -85,7 +85,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -97,7 +97,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -109,7 +109,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},
@@ -121,7 +121,7 @@ const equipmentSchema = new mongoose.Schema({
 				this instanceof mongoose.Query /* only run on queries */ &&
 				v === ''
 			) {
-				return undefined;
+				return;
 			}
 			return v;
 		},

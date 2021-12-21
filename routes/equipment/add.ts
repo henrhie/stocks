@@ -18,7 +18,7 @@ router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		const date = new Date()
-			.toLocaleDateString('en-GB')
+			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
 		const equipment = Equipment.build({
