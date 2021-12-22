@@ -29,114 +29,38 @@ interface EquipmentDocument extends mongoose.Document {
 }
 
 const equipmentSchema = new mongoose.Schema({
+	// author: {
+	// 	type: String,
+	// 	required: true,
+	// },
 	equipment_name: {
 		type: String,
-		required: true,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
+		// required: true,
 	},
 	date: {
 		type: String,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
+		// required: true,
 	},
 	current_l1: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	current_l2: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	current_l3: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	power_kw: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	power_kva: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	utilization: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 	remark: {
 		type: String,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
 });
 
