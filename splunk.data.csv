@@ -1,4 +1,5 @@
-_id,equipment_name,date,current_l1,current_l2,current_l3,power_kw,power_kva,utilization,remark
-61c328362481f78f5026dd43,Genset A (400 KvA),22-12-2021,2,33,3,7547537,33,0.08,Loading Bal Required
-61c33671a2d6c6605794a25e,UPS A (120 KvA),22-12-2021,2,55,22,4,33,0.28,OK
-61c3547393e76434c57ec771,AVR 1 (350 KvA),22-12-2021,55,60,2,33,33,0.09,Good
+equipment_name  ,date       ,current_l1 ,current_l2 ,current_l3 ,power_kw ,power_kva ,utilization ,remark
+AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
+AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
+AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
+AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good

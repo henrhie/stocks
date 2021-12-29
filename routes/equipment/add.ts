@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
 import { _Date } from '../../models/date';
+import { addToCsv } from '../../utils';
 
 const router = express.Router();
 
@@ -44,6 +45,8 @@ router.post(
 				  )
 				: 0,
 		});
+
+		addToCsv(equipment.toObject());
 
 		console.log('serve hit');
 		equipment

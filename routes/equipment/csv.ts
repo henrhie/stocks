@@ -17,6 +17,7 @@ router.get(
 		const _equipment_ = equipment.map((doc) => {
 			const row = doc.toObject();
 			delete row.__v;
+			delete row._id;
 			return row;
 		});
 		const csvFile = generateCsv(_equipment_);
