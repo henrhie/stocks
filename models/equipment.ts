@@ -10,6 +10,7 @@ interface attrType {
 	power_kva?: number;
 	utilization?: number;
 	remark?: string;
+	user?: string;
 }
 
 interface EquipmentModel extends mongoose.Model<EquipmentDocument> {
@@ -26,6 +27,7 @@ interface EquipmentDocument extends mongoose.Document {
 	power_kva?: number;
 	utilization?: number;
 	remark?: string;
+	user?: string;
 }
 
 const equipmentSchema = new mongoose.Schema({
@@ -62,6 +64,7 @@ const equipmentSchema = new mongoose.Schema({
 	remark: {
 		type: String,
 	},
+	user: String,
 });
 
 equipmentSchema.statics.build = (buildAttr: attrType) => {

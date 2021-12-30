@@ -1,5 +1,8 @@
-equipment_name  ,date       ,current_l1 ,current_l2 ,current_l3 ,power_kw ,power_kva ,utilization ,remark
-AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
-AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
-AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
-AVR 1 (350 KvA) ,12-29-2021 ,22         ,33         ,55         ,77       ,88        ,0.25        ,Good
+equipment_name,date,current_l1,current_l2,current_l3,power_kw,power_kva,utilization,remark,user
+UPS B (120 KvA),29-12-2021,null,null,null,null,null,0,,Emmanuel K.
+AVR 2 (350 KvA),29-12-2021,null,null,null,null,null,0,,Emmanuel K.
+AVR 2 (350 KvA),28-12-2021,null,null,null,null,null,0,,Emmanuel K.
+UPS B (120 KvA),29-12-2021,null,null,null,null,null,0,,Emmanuel K.
+AVR 2 (350 KvA),29-12-2021,null,null,null,null,null,0,,Emmanuel K.
+AVR 2 (350 KvA),28-12-2021,null,null,null,null,null,0,,Emmanuel K.
+Genset A (400 KvA),28-12-2021,null,null,null,null,null,0,,Emmanuel K.

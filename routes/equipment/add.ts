@@ -29,7 +29,17 @@ interface ReqBody {
 router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		console.log('date:::: ', req.body.date);
+		const existingEquipment = await Equipment.find({
+			equipment_name: req.body.equipment_name,
+			date: req.body.date,
+		});
+		if (existingEquipment) {
+			return res
+				.status(401)
+				.send(
+					`equipment with name: ${req.body.equipment_name} already exist for ${req.body.date}`
+				);
+		}
 		const date = new Date()
 			.toLocaleDateString('en-GB')
 			.replace('/', '-')
@@ -48,7 +58,6 @@ router.post(
 
 		addToCsv(equipment.toObject());
 
-		console.log('serve hit');
 		equipment
 			.save()
 			.then(async () => {
