@@ -1,20 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { token } from '../env/secrets';
-
 interface UserPayload {
 	name: string;
 	id: string;
 	c_number: string;
-}
-
-declare global {
-	namespace Express {
-		interface Request {
-			currentUser?: UserPayload;
-		}
-	}
 }
 
 export const currentUser = (
@@ -22,13 +12,14 @@ export const currentUser = (
 	res: Response,
 	next: NextFunction
 ) => {
-	if (!req.session?.jwt) {
-		return next();
-	}
+	if (!req.session?.jwt) return next();
 
 	try {
-		const payload = jwt.verify(req.session.jwt, token) as UserPayload;
-		req.currentUser = payload;
+		const payload = jwt.verify(
+			req.session.jwt,
+			process.env.JWT_KEY!
+		) as UserPayload;
+		if (payload) req.currentUser = payload;
 	} catch (err) {}
 
 	next();

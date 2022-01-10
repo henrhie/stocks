@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
+import { User } from '../../models/user';
 
 const router = express.Router();
 
@@ -30,8 +31,10 @@ router.put(
 		res: Response
 	) => {
 		const { name, date } = req.params;
-		console.log('name: ', name);
-		console.log('date: ', date);
+		// const user = await User.findOne({ name: req.currentUser?.name });
+		// // if (user && user?.access_level !== 'admin') {
+		// // 	return res.status(401).send('Not authorized for this operation');
+		// // }
 		const equipment = await Equipment.findOne({ equipment_name: name, date });
 		if (!equipment) {
 			throw new Error('equipment does not exist');

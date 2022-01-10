@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
 import { _Date } from '../../models/date';
+import { User } from '../../models/user';
 import { addToCsv } from '../../utils';
 
 const router = express.Router();
@@ -24,22 +25,16 @@ interface ReqBody {
 	power_kva?: number;
 	utilization?: number;
 	remark?: string;
+	username?: string;
 }
 
 router.post(
 	'/api/equipment',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const existingEquipment = await Equipment.find({
-			equipment_name: req.body.equipment_name,
-			date: req.body.date,
-		});
-		if (existingEquipment) {
-			return res
-				.status(401)
-				.send(
-					`equipment with name: ${req.body.equipment_name} already exist for ${req.body.date}`
-				);
-		}
+		// const user = await User.findOne({ name: req.body.username });
+		// if (user?.access_level !== 'admin') {
+		// 	return res.status(401).send('Not authorized for this operation');
+		// }
 		const date = new Date()
 			.toLocaleDateString('en-GB')
 			.replace('/', '-')

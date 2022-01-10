@@ -11,6 +11,10 @@ import { mongoURL } from './env/secrets';
 import { showRouter } from './routes/equipment/show';
 
 import cors from 'cors';
+import { SigninRouter } from './routes/auth/signin';
+import { SignoutRouter } from './routes/auth/signout';
+import { SignupRouter } from './routes/auth/signup';
+import { currentUser } from './services/current-user';
 
 const app = express();
 
@@ -23,6 +27,11 @@ app.use(
 		signed: false,
 	})
 );
+
+app.use(currentUser);
+app.use(SignupRouter);
+app.use(SignoutRouter);
+app.use(SigninRouter);
 
 app.use(addRouter);
 app.use(updateRouter);
