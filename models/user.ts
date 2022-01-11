@@ -4,7 +4,7 @@ import { Password } from '../services/password';
 
 interface attrType {
 	name: string;
-	c_number: string;
+	username: string;
 	password: string;
 	access_level?: 'admin' | 'user';
 }
@@ -15,7 +15,7 @@ interface UserModel extends mongoose.Model<UserDocument> {
 
 interface UserDocument extends mongoose.Document {
 	name: string;
-	c_number: string;
+	username: string;
 	password: string;
 	access_level?: 'admin' | 'user';
 }
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		c_number: {
+		username: {
 			type: String,
 			required: true,
 		},

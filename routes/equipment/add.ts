@@ -3,6 +3,7 @@ import { Equipment } from '../../models/equipment';
 import { _Date } from '../../models/date';
 import { User } from '../../models/user';
 import { addToCsv } from '../../utils';
+import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ interface ReqBody {
 
 router.post(
 	'/api/equipment',
+	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		// const user = await User.findOne({ name: req.body.username });
 		// if (user?.access_level !== 'admin') {

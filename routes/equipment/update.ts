@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
 import { User } from '../../models/user';
+import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
@@ -26,6 +27,7 @@ interface ReqBody {
 
 router.put(
 	'/api/equipment/:date/:name',
+	requireAuth,
 	async (
 		req: Request<{ name: string; date: string }, {}, ReqBody>,
 		res: Response

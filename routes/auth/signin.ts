@@ -6,7 +6,7 @@ import { User } from '../../models/user';
 import { token } from '../../env/secrets';
 
 interface ReqBody {
-	c_number: string;
+	username: string;
 	password: string;
 }
 
@@ -15,8 +15,8 @@ const router = express.Router();
 router.post(
 	'/api/users/signin',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { c_number, password } = req.body;
-		const user = await User.findOne({ c_number });
+		const { username, password } = req.body;
+		const user = await User.findOne({ username });
 		if (!user) {
 			throw new Error('email or password is incorrect');
 		}
@@ -29,13 +29,13 @@ router.post(
 		const userJwt = jwt.sign(
 			{
 				id: user.id,
-				c_number: user.c_number,
+				username: user.username,
 				name: user.name,
 			},
 			token
 		);
-		req.session = { jwt: userJwt };
-		return res.status(201).send(user);
+		// req.session = { jwt: userJwt };
+		return res.status(201).send({ user, token: userJwt });
 	}
 );
 

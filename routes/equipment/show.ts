@@ -1,11 +1,13 @@
 import express, { Request, Response } from 'express';
 import { _Date } from '../../models/date';
 import { Equipment } from '../../models/equipment';
+import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 router.get(
 	'/api/equipment/:date/:name',
+	requireAuth,
 	async (req: Request<{ name: string; date: string }>, res: Response) => {
 		const { name, date } = req.params;
 		const equipment = await Equipment.findOne({ equipment_name: name, date });

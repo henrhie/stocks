@@ -6,7 +6,7 @@ import { token } from '../../env/secrets';
 
 interface ReqBody {
 	name: string;
-	c_number: string;
+	username: string;
 	password: string;
 }
 
@@ -15,22 +15,22 @@ const router = express.Router();
 router.post(
 	'/api/users/signup',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { name, c_number, password } = req.body;
+		const { name, username, password } = req.body;
 
-		const existingUser = await User.findOne({ c_number });
+		const existingUser = await User.findOne({ username });
 		if (existingUser) {
 			throw new Error('user with email already exists');
 		}
 
 		User.build({
 			name,
-			c_number,
+			username,
 			password,
 		}).save((err, user) => {
 			const userJwt = jwt.sign(
 				{
 					id: user.id,
-					c_number: user.c_number,
+					username: user.username,
 					name: name,
 				},
 				token

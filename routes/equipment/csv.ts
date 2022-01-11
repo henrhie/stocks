@@ -3,11 +3,13 @@ import { writeFile } from 'fs';
 import { Equipment } from '../../models/equipment';
 
 import { generateCsv } from '../../utils';
+import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 router.get(
 	'/api/equipment/csv/:date',
+	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
 		const equipment = await Equipment.find({ date });
