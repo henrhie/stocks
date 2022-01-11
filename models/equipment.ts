@@ -10,6 +10,7 @@ interface attrType {
 	power_kva?: number;
 	utilization?: number;
 	remark?: string;
+	user?: string;
 }
 
 interface EquipmentModel extends mongoose.Model<EquipmentDocument> {
@@ -26,118 +27,44 @@ interface EquipmentDocument extends mongoose.Document {
 	power_kva?: number;
 	utilization?: number;
 	remark?: string;
+	user?: string;
 }
 
 const equipmentSchema = new mongoose.Schema({
+	// author: {
+	// 	type: String,
+	// 	required: true,
+	// },
 	equipment_name: {
 		type: String,
-		required: true,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
+		// required: true,
 	},
 	date: {
 		type: String,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
+		// required: true,
 	},
 	current_l1: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	current_l2: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	current_l3: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	power_kw: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	power_kva: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	utilization: {
 		type: Number,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return;
-			}
-			return v;
-		},
 	},
 	remark: {
 		type: String,
-		set: function omitEmptyString(v: any) {
-			if (
-				this instanceof mongoose.Query /* only run on queries */ &&
-				v === ''
-			) {
-				return undefined;
-			}
-			return v;
-		},
 	},
+	user: String,
 });
 
 equipmentSchema.statics.build = (buildAttr: attrType) => {

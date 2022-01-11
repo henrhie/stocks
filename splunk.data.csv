@@ -1,6 +1,4 @@
-_id                      ,equipment_name ,date       ,current_l1
-61bb0ee902550146091406ce ,sdhf           ,16/12/2021 ,24
-61bb0eee02550146091406d0 ,hhhh           ,16/12/2021 ,24
-61bb0ef002550146091406d2 ,ssss           ,16/12/2021 ,24
-61bb0ef402550146091406d4 ,dffgfd         ,16/12/2021 ,24
-61bb0fec02550146091406d6 ,bbbb           ,16/12/2021 ,24
+equipment_name,date,current_l1,current_l2,current_l3,power_kw,power_kva,utilization,remark,user
+AVR 1 (350 KvA),10-01-2022,4,33,2,33,33,0.09,Good,Emmanuel K.
+AVR 2 (350 KvA),09-01-2022,4,33,33,4,33,0.09,Good
+UPS A (120 KvA),11-01-2022,null,null,null,null,null,0,,stanbic

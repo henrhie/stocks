@@ -4,8 +4,9 @@ import { Password } from '../services/password';
 
 interface attrType {
 	name: string;
-	email: string;
+	username: string;
 	password: string;
+	access_level?: 'admin' | 'user';
 }
 
 interface UserModel extends mongoose.Model<UserDocument> {
@@ -14,8 +15,9 @@ interface UserModel extends mongoose.Model<UserDocument> {
 
 interface UserDocument extends mongoose.Document {
 	name: string;
-	email: string;
+	username: string;
 	password: string;
+	access_level?: 'admin' | 'user';
 }
 
 const userSchema = new mongoose.Schema(
@@ -24,13 +26,17 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		email: {
+		username: {
 			type: String,
 			required: true,
 		},
 		password: {
 			type: String,
 			required: true,
+		},
+		access_level: {
+			type: String,
+			// required: true,
 		},
 	},
 	{
