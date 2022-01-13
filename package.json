@@ -4,10 +4,9 @@
 	"description": "backend for portal",
 	"main": "dist/index.js",
 	"scripts": {
-		"server": "node dist/index.js",
+		"server": "node ./dist/index.js",
 		"start:dev": "ts-node-dev index.ts",
-		"start": "npm run server",
-		"build": "tsc"
+		"start": "npm run server"
 	},
 	"keywords": [
 		"node"
