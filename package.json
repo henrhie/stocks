@@ -5,8 +5,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"server": "node ./dist/index.js",
-		"start:dev": "ts-node-dev index.ts",
-		"start": "npm run server"
+		"start": "ts-node-dev index.ts"
 	},
 	"keywords": [
 		"node"
@@ -19,7 +18,8 @@
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"mongodb": "^4.2.1",
-		"mongoose": "^6.1.0"
+		"mongoose": "^6.1.0",
+		"ts-node-dev": "^1.1.8"
 	},
 	"devDependencies": {
 		"@types/cookie-session": "^2.0.43",
@@ -28,7 +28,6 @@
 		"@types/jsonwebtoken": "^8.5.6",
 		"@types/mongodb": "^4.0.7",
 		"ts-node": "^10.4.0",
-		"ts-node-dev": "^1.1.8",
 		"typescript": "^4.5.2"
 	}
 }
