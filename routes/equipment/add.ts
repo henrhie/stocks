@@ -49,8 +49,8 @@ router.post(
 				? parseFloat(
 						(
 							req.body.power_kva / equipmentToKVA[req.body.equipment_name]
-						).toFixed(2)
-				  )
+						).toFixed(3)
+				  ) * 100
 				: 0,
 		});
 
