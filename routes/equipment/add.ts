@@ -37,6 +37,7 @@ router.post(
 		// if (user?.access_level !== 'admin') {
 		// 	return res.status(401).send('Not authorized for this operation');
 		// }
+
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
