@@ -42,7 +42,7 @@ app.use(deleteRouter);
 app.use(csvRouter);
 app.use(showRouter);
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 mongoose
 	.connect(mongoURL)
