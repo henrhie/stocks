@@ -31,6 +31,7 @@ router.post(
 				id: user.id,
 				username: user.username,
 				name: user.name,
+				access_level: user.access_level,
 			},
 			token
 		);

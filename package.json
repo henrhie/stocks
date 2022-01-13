@@ -6,7 +6,8 @@
 	"scripts": {
 		"server": "node dist/index.js",
 		"start:dev": "ts-node-dev index.ts",
-		"start": "tsc && npm run server"
+		"start": "npm run server",
+		"build": "tsc"
 	},
 	"keywords": [
 		"node"

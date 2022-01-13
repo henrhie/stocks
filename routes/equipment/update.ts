@@ -33,10 +33,6 @@ router.put(
 		res: Response
 	) => {
 		const { name, date } = req.params;
-		// const user = await User.findOne({ name: req.currentUser?.name });
-		// // if (user && user?.access_level !== 'admin') {
-		// // 	return res.status(401).send('Not authorized for this operation');
-		// // }
 		const equipment = await Equipment.findOne({ equipment_name: name, date });
 		if (!equipment) {
 			throw new Error('equipment does not exist');
@@ -45,7 +41,6 @@ router.put(
 		const { current_l1, current_l2, current_l3, power_kva, power_kw, remark } =
 			req.body;
 
-		console.log('equipment before: ', equipment);
 
 		equipment.set({
 			equipment_name: req.body.equipment_name,

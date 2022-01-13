@@ -3,3 +3,15 @@ AVR 1 (350 KvA),10-01-2022,4,33,2,33,33,0.09,Good,Emmanuel K.
 AVR 2 (350 KvA),09-01-2022,4,33,33,4,33,0.09,Good
 UPS A (120 KvA),11-01-2022,null,null,null,null,null,0,,stanbic
 AVR 2 (350 KvA),1-11-2022,2,363,535,443,32,0.09,Good,stanbic
+UPS B (120 KvA),12-01-2022,5345,4,33,33,33,0.28,Good,stanbic
+UPS A (120 KvA),12-01-2022,2,33,33,33,4,0.03,Good,stanbic2
+AVR 1 (350 KvA),12-01-2022,2,33,33,4,33,0.09,OK,stanbic2
+AVR 1 (350 KvA),12-01-2022,null,null,null,null,33,0.09,Good,stanbic2
+Genset A (400 KvA),12-01-2022,null,null,null,null,32,0.08,Loading Bal Required,stanbic2
+Genset B (400 KvA),12-01-2022,null,null,null,null,100,0.25,Good,stanbic2
+AVR 1 (350 KvA),12-01-2022,null,null,null,null,33,0.09,,stanbic2
+AVR 2 (350 KvA),12-01-2022,null,null,null,null,4,0.01,,stanbic2
+UPS A (120 KvA),12-01-2022,null,null,null,null,null,0,,stanbic2
+UPS B (120 KvA),12-01-2022,null,null,null,null,null,0,,stanbic2
+Genset A (400 KvA),12-01-2022,null,null,null,null,null,0,,stanbic2
+Genset B (400 KvA),12-01-2022,null,null,null,null,null,0,,stanbic2

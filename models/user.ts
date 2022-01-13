@@ -6,7 +6,7 @@ interface attrType {
 	name: string;
 	username: string;
 	password: string;
-	access_level?: 'admin' | 'user';
+	access_level: string;
 }
 
 interface UserModel extends mongoose.Model<UserDocument> {
@@ -17,7 +17,7 @@ interface UserDocument extends mongoose.Document {
 	name: string;
 	username: string;
 	password: string;
-	access_level?: 'admin' | 'user';
+	access_level: string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
 		},
 		access_level: {
 			type: String,
-			// required: true,
+			required: true,
 		},
 	},
 	{
