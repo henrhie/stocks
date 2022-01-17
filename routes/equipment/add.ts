@@ -1,19 +1,18 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
 import { _Date } from '../../models/date';
-import { User } from '../../models/user';
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 const equipmentToKVA: any = {
-	'AVR 1 (350 KvA)': 350,
-	'AVR 2 (350 KvA)': 350,
-	'UPS A (120 KvA)': 120,
-	'UPS B (120 KvA)': 120,
-	'Genset A (400 KvA)': 400,
-	'Genset B (400 KvA)': 400,
+	'AVR 1 (350 KvA)': 350.0,
+	'AVR 2 (350 KvA)': 350.0,
+	'UPS A (120 KvA)': 120.0,
+	'UPS B (120 KvA)': 120.0,
+	'Genset A (400 KvA)': 400.0,
+	'Genset B (400 KvA)': 400.0,
 };
 
 interface ReqBody {
@@ -33,11 +32,6 @@ router.post(
 	'/api/equipment',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		// const user = await User.findOne({ name: req.body.username });
-		// if (user?.access_level !== 'admin') {
-		// 	return res.status(401).send('Not authorized for this operation');
-		// }
-
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')

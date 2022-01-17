@@ -10,11 +10,7 @@ router.delete(
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
-		// const user = await User.findOne({ name: (req as any).currentUser.name });
-		// console.log('user: ', user);
-		// if (user?.access_level !== 'admin') {
-		// 	return res.status(401).send('Not authorized for this operation');
-		// }
+
 		const equipment = await Equipment.deleteOne({ equipment_name: name, date });
 		if (!equipment) {
 			throw new Error('could not find equipment to delete');
