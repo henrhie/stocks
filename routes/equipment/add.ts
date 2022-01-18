@@ -7,8 +7,8 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 const equipmentToKVA: any = {
-	'AVR 1 (350 KvA)': 350.0,
-	'AVR 2 (350 KvA)': 350.0,
+	'AVR 1 (350 KvA)': 250.0,
+	'AVR 2 (350 KvA)': 250.0,
 	'UPS A (120 KvA)': 120.0,
 	'UPS B (120 KvA)': 120.0,
 	'Genset A (400 KvA)': 400.0,
