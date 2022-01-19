@@ -6,7 +6,7 @@ export const requireAuth = (
 	next: NextFunction
 ) => {
 	if (!req.currentUser) {
-		throw new Error('Not Authorized');
+		res.send('Not authorized for this operation');
 	}
 	next();
 };

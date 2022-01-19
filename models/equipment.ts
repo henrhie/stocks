@@ -31,39 +31,15 @@ interface EquipmentDocument extends mongoose.Document {
 }
 
 const equipmentSchema = new mongoose.Schema({
-	// author: {
-	// 	type: String,
-	// 	required: true,
-	// },
-	equipment_name: {
-		type: String,
-		// required: true,
-	},
-	date: {
-		type: String,
-		// required: true,
-	},
-	current_l1: {
-		type: Number,
-	},
-	current_l2: {
-		type: Number,
-	},
-	current_l3: {
-		type: Number,
-	},
-	power_kw: {
-		type: Number,
-	},
-	power_kva: {
-		type: Number,
-	},
-	utilization: {
-		type: Number,
-	},
-	remark: {
-		type: String,
-	},
+	equipment_name: String,
+	date: String,
+	current_l1: Number,
+	current_l2: Number,
+	current_l3: Number,
+	power_kw: Number,
+	power_kva: Number,
+	utilization: Number,
+	remark: String,
 	user: String,
 });
 

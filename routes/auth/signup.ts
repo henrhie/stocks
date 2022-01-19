@@ -20,7 +20,7 @@ router.post(
 
 		const existingUser = await User.findOne({ username });
 		if (existingUser) {
-			throw new Error('user with email already exists');
+			return res.send('user with this username already exists');
 		}
 
 		User.build({

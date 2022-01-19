@@ -16,6 +16,16 @@ import { SignoutRouter } from './routes/auth/signout';
 import { SignupRouter } from './routes/auth/signup';
 import { currentUserRouter } from './routes/auth/current-user';
 import { validateUser } from './routes/auth/validate-user';
+import { addAutonomyRouter } from './routes/autonomy/add';
+import { deleteAutonomyRouter } from './routes/autonomy/delete';
+import { showAutonomyRouter } from './routes/autonomy/show';
+import { addPowerUsageRouter } from './routes/power-usage/add';
+import { deletePowerUsageRouter } from './routes/power-usage/delete';
+import { showPowerUsageRouter } from './routes/power-usage/show';
+import { updatePowerUsageRouter } from './routes/power-usage/update';
+import { updateAutonomyRouter } from './routes/autonomy/update';
+import { addRemarkRouter } from './routes/remarks/add';
+import { showRemarksRouter } from './routes/remarks/show';
 
 const app = express();
 
@@ -23,6 +33,18 @@ app.use(cors());
 
 app.use(express.json());
 app.use(validateUser);
+
+app.use(addRemarkRouter);
+app.use(showRemarksRouter);
+
+app.use(addAutonomyRouter);
+app.use(deleteAutonomyRouter);
+app.use(showAutonomyRouter);
+app.use(addPowerUsageRouter);
+app.use(deletePowerUsageRouter);
+app.use(showPowerUsageRouter);
+app.use(updatePowerUsageRouter);
+app.use(updateAutonomyRouter);
 
 app.use(currentUserRouter);
 app.use(SignupRouter);

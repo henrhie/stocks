@@ -23,7 +23,7 @@ router.post(
 
 		const match = await Password.compare(user.password, password);
 		if (!match) {
-			throw new Error('email or password is incorrect');
+			return res.send('username or password incorrect');
 		}
 
 		const userJwt = jwt.sign(
