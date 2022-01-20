@@ -32,21 +32,22 @@ router.post(
 	'/api/equipment',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		console.log('request body======>: ', req.body);
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
+		const utilization = req.body.power_kva
+			? parseFloat(
+					(
+						req.body.power_kva / equipmentToKVA[req.body.equipment_name]
+					).toFixed(3)
+			  ) * 100
+			: 0;
+		console.log('utilization: ', utilization);
 		const equipment = Equipment.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
-			utilization: req.body.power_kva
-				? parseFloat(
-						(
-							req.body.power_kva / equipmentToKVA[req.body.equipment_name]
-						).toFixed(3)
-				  ) * 100
-				: 0,
+			utilization,
 		});
 
 		addToCsv(equipment.toObject());
