@@ -32,6 +32,7 @@ router.post(
 	'/api/equipment',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
+		console.log('kva: ', equipmentToKVA[req.body.equipment_name]);
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
@@ -47,7 +48,7 @@ router.post(
 		const equipment = Equipment.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
-			utilization,
+			//utilization,
 		});
 
 		addToCsv(equipment.toObject());
