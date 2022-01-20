@@ -10,7 +10,7 @@ router.get(
 	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const powerUsage = await PowerUsage.findOne({ date });
+		const powerUsage = await PowerUsage.find({ date });
 		if (!powerUsage) {
 			return res.send('not entries found');
 		}
