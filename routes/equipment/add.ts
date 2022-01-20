@@ -22,7 +22,7 @@ interface ReqBody {
 	current_l2?: number;
 	current_l3?: number;
 	power_kw?: number;
-	power_kva?: number;
+	power_kva: string;
 	utilization?: number;
 	equipment_rmks?: string;
 	username?: string;
@@ -36,18 +36,17 @@ router.post(
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
-		const utilization = req.body.power_kva
-			? parseFloat(
-					(
-						req.body.power_kva / equipmentToKVA[req.body.equipment_name]
-					).toFixed(2)
-			  ) * 100
-			: 0;
+		const util_ =
+			(parseFloat(req.body.power_kva) /
+				equipmentToKVA[req.body.equipment_name]) *
+			100;
+		const utilization = req.body.power_kva ? parseFloat(util_.toFixed(2)) : 0;
 		const equipment = Equipment.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
 			utilization,
 			remark: req.body.equipment_rmks,
+			power_kva: parseFloat(req.body.power_kva),
 		});
 
 		addToCsv(equipment.toObject());
