@@ -27,6 +27,9 @@ router.post(
 		const pue = parseFloat(
 			(req.body.server_cons / req.body.total_cons).toFixed(2)
 		);
+		console.log('server_cons===> ', req.body.server_cons);
+		console.log('total_cons===> ', req.body.total_cons);
+		console.log('pue===> ', pue);
 		const powerUsage = PowerUsage.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
