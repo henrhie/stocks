@@ -40,7 +40,7 @@ router.post(
 			? parseFloat(
 					(
 						req.body.power_kva / equipmentToKVA[req.body.equipment_name]
-					).toFixed(3)
+					).toFixed(2)
 			  ) * 100
 			: 0;
 		const equipment = Equipment.build({
