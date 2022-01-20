@@ -7,12 +7,12 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 const equipmentToKVA: any = {
-	'AVR 1 (350 KvA)': 250.0,
-	'AVR 2 (350 KvA)': 250.0,
-	'UPS A (120 KvA)': 120.0,
-	'UPS B (120 KvA)': 120.0,
-	'Genset A (400 KvA)': 400.0,
-	'Genset B (400 KvA)': 400.0,
+	'AVR 1 (350 kVA)': 250.0,
+	'AVR 2 (350 kVA)': 250.0,
+	'UPS A (120 kVA)': 120.0,
+	'UPS B (120 kVA)': 120.0,
+	'Genset A (400 kVA)': 400.0,
+	'Genset B (400 kVA)': 400.0,
 };
 
 interface ReqBody {
@@ -32,7 +32,6 @@ router.post(
 	'/api/equipment',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		console.log('kva: ', equipmentToKVA[req.body.equipment_name]);
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
@@ -44,11 +43,10 @@ router.post(
 					).toFixed(3)
 			  ) * 100
 			: 0;
-		console.log('utilization: ', utilization);
 		const equipment = Equipment.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
-			//utilization,
+			utilization,
 		});
 
 		addToCsv(equipment.toObject());
