@@ -24,7 +24,7 @@ interface ReqBody {
 	power_kw?: number;
 	power_kva?: number;
 	utilization?: number;
-	remark?: string;
+	equipment_rmks?: string;
 	username?: string;
 }
 
@@ -47,6 +47,7 @@ router.post(
 			...req.body,
 			date: req.body.date ? req.body.date : date,
 			utilization,
+			remark: req.body.equipment_rmks,
 		});
 
 		addToCsv(equipment.toObject());
