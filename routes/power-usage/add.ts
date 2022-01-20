@@ -12,6 +12,7 @@ interface ReqBody {
 	total_cons: number;
 	facility_rmks: string;
 	date: string;
+	user: string;
 }
 
 router.post(
@@ -22,9 +23,14 @@ router.post(
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
+
+		const pue = parseFloat(
+			(req.body.server_cons / req.body.total_cons).toFixed(2)
+		);
 		const powerUsage = PowerUsage.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
+			pue,
 		});
 
 		addToCsv(powerUsage.toObject());

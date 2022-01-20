@@ -5,7 +5,9 @@ interface attrType {
 	server_cons: number;
 	total_cons: number;
 	facility_rmks: string;
+	pue: number;
 	date: string;
+	user: string;
 }
 
 interface PowerUsageModel extends mongoose.Model<Partial<PowerUsageDocument>> {
@@ -18,6 +20,8 @@ interface PowerUsageDocument extends mongoose.Document {
 	total_cons: number;
 	facility_rmks: string;
 	date: string;
+	pue: number;
+	user: string;
 }
 
 const powerUsageSchema = new mongoose.Schema({
@@ -26,6 +30,8 @@ const powerUsageSchema = new mongoose.Schema({
 	total_cons: Number,
 	facility_rmks: String,
 	date: String,
+	pue: Number,
+	user: String,
 });
 
 powerUsageSchema.statics.build = (buildAttr: Partial<attrType>) => {
