@@ -32,6 +32,7 @@ router.post(
 	'/api/equipment',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
+		console.log('request body======>: ', req.body);
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
