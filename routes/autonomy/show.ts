@@ -10,22 +10,14 @@ router.get(
 	requireAuth,
 	async (req: Request<{ name: string; date: string }>, res: Response) => {
 		const { name, date } = req.params;
-		let autonomy;
-		if (name === 'UPS A Autonomy') {
-			autonomy = await Autonomy.findOne({
-				autonomyA: name,
-				date,
-			});
-		} else if (name === 'UPS B Autonomy') {
-			autonomy = await Autonomy.findOne({
-				autonomyB: name,
-				date,
-			});
+		const autonomy_ = await Autonomy.findOne({
+			name,
+			date,
+		});
+		if (!autonomy_) {
+			return res.status(401).send('not found');
 		}
-		if (!autonomy) {
-			throw new Error('could not find autonomy');
-		}
-		return res.send(autonomy);
+		return res.send(autonomy_);
 	}
 );
 
@@ -35,7 +27,7 @@ router.get(
 		const { date } = req.params;
 		const autonomy = await Autonomy.find({ date });
 		if (!autonomy) {
-			throw new Error('could not find autonomy');
+			return res.status(401).send('not found');
 		}
 		return res.send({ autonomy });
 	}

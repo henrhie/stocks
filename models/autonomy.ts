@@ -1,10 +1,8 @@
 import mongoose = require('mongoose');
 
 interface attrType {
-	autonomyA: string;
-	autonomyB: string;
-	ups_valueA: number;
-	ups_valueB: number;
+	autonomy: string;
+	value: number;
 	autonomy_rmks: string;
 	date: string;
 }
@@ -14,19 +12,15 @@ interface AutonomyModel extends mongoose.Model<AutonomyDocument> {
 }
 
 interface AutonomyDocument extends mongoose.Document {
-	autonomyA: string;
-	autonomyB: string;
-	ups_valueA: number;
-	ups_valueB: number;
+	autonomy: string;
+	value: number;
 	autonomy_rmks: string;
 	date: string;
 }
 
 const autonomySchema = new mongoose.Schema({
-	autonomyA: String,
-	autonomyB: String,
-	ups_valueA: Number,
-	ups_valueB: Number,
+	autonomy: String,
+	value: Number,
 	autonomy_rmks: String,
 	date: String,
 });
