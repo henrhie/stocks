@@ -36,7 +36,7 @@ router.put(
 		});
 
 		await autonomy_.save();
-		return res.send(autonomy);
+		return res.send(autonomy_);
 	}
 );
 
