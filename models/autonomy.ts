@@ -5,6 +5,7 @@ interface attrType {
 	value: number;
 	autonomy_rmks: string;
 	date: string;
+	user: string;
 }
 
 interface AutonomyModel extends mongoose.Model<AutonomyDocument> {
@@ -16,6 +17,7 @@ interface AutonomyDocument extends mongoose.Document {
 	value: number;
 	autonomy_rmks: string;
 	date: string;
+	user: string;
 }
 
 const autonomySchema = new mongoose.Schema({
@@ -23,6 +25,7 @@ const autonomySchema = new mongoose.Schema({
 	value: Number,
 	autonomy_rmks: String,
 	date: String,
+	user: String,
 });
 
 autonomySchema.statics.build = (buildAttr: attrType) => {

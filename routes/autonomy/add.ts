@@ -7,12 +7,11 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	autonomyA: string;
-	autonomyB: string;
-	ups_valueA: number;
-	ups_valueB: number;
+	autonomy: string;
+	value: number;
 	autonomy_rmks: string;
 	date: string;
+	user: string;
 }
 
 router.post(
@@ -23,6 +22,8 @@ router.post(
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
+
+		console.log('req.body ===> ', req.body);
 		const autonomy = Autonomy.build({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
