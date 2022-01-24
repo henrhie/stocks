@@ -11,6 +11,7 @@ router.post(
 	'/api/remarks',
 	requireAuth,
 	async (req: Request<{}, {}, { remark: string }>, res: Response) => {
+		console.log('req.body ===>: ', req.body);
 		const remark = Remarks.build({
 			...req.body,
 		});
