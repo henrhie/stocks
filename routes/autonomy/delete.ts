@@ -9,23 +9,14 @@ router.delete(
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
-		let autonomy;
-		if (name === 'UPS A Autonomy') {
-			autonomy = await Autonomy.deleteOne({
-				autonomyA: name,
-				date,
-			});
-		} else if (name === 'UPS B Autonomy') {
-			autonomy = await Autonomy.deleteOne({
-				autonomyB: name,
-				date,
-			});
-		}
-
+		const autonomy = await Autonomy.deleteOne({
+			name,
+			date,
+		});
 		if (!autonomy) {
-			throw new Error('could not find equipment to delete');
+			return res.status(401).send('could not find equipment to delete');
 		}
-		res.send(autonomy);
+		return res.send(autonomy);
 	}
 );
 
