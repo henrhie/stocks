@@ -10,10 +10,13 @@ const router = express.Router();
 router.post(
 	'/api/remarks',
 	requireAuth,
-	async (req: Request<{}, {}, { remark: string }>, res: Response) => {
+	async (
+		req: Request<{}, {}, { payload: { remark: string } }>,
+		res: Response
+	) => {
 		console.log('req.body ===>: ', req.body);
 		const remark = Remarks.build({
-			...req.body,
+			...req.body.payload,
 		});
 		const remarks = await Remarks.find();
 		remark
