@@ -13,10 +13,8 @@ router.delete(
 			name,
 			date,
 		});
-		if (!autonomy) {
-			return res.status(401).send('could not find equipment to delete');
-		}
-		return res.send(autonomy);
+		const autonomies = await Autonomy.find();
+		return res.send(autonomies);
 	}
 );
 
