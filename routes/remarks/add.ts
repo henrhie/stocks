@@ -14,11 +14,11 @@ router.post(
 		const remark = Remarks.build({
 			...req.body,
 		});
-
+		const remarks = await Remarks.find();
 		remark
 			.save()
 			.then(async () => {
-				return res.status(201).send(remark);
+				return res.status(201).send(remarks);
 			})
 			.catch((err) => {
 				console.log(err);
