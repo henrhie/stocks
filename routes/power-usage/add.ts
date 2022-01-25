@@ -25,7 +25,7 @@ router.post(
 			.replace('/', '-');
 
 		const pue = parseFloat(
-			(req.body.server_cons / req.body.total_cons).toFixed(2)
+			(req.body.total_cons / req.body.server_cons).toFixed(2)
 		);
 		const powerUsage = PowerUsage.build({
 			...req.body,

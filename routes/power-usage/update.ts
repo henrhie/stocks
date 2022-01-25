@@ -27,7 +27,7 @@ router.put(
 		const server_cons_ = server_cons ? server_cons : powerUsage.server_cons;
 		const total_cons_ = total_cons ? total_cons : powerUsage.total_cons;
 		if (server_cons_ && total_cons_) {
-			pue = parseFloat((server_cons_ / total_cons_).toFixed(2));
+			pue = parseFloat((total_cons_ / server_cons_).toFixed(2));
 		}
 
 		powerUsage.set({
