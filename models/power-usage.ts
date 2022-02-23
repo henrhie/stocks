@@ -5,7 +5,7 @@ import {
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelize } from '../index';
+import { sequelizeInstance } from './sequelizeInstance';
 class PowerUsage extends Model<
 	InferAttributes<PowerUsage>,
 	InferCreationAttributes<PowerUsage>
@@ -19,41 +19,6 @@ class PowerUsage extends Model<
 	declare pue: number;
 	declare user: string;
 }
-
-PowerUsage.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		facility: {
-			type: DataTypes.STRING,
-		},
-		server_cons: {
-			type: DataTypes.NUMBER,
-		},
-		total_cons: {
-			type: DataTypes.NUMBER,
-		},
-		facility_rmks: {
-			type: DataTypes.STRING,
-		},
-		pue: {
-			type: DataTypes.NUMBER,
-		},
-		date: {
-			type: DataTypes.STRING,
-		},
-		user: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'PowerUsage',
-	}
-);
 
 export { PowerUsage };
 

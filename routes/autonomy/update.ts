@@ -20,8 +20,10 @@ router.put(
 	) => {
 		const { name, date } = req.params;
 		const autonomy_ = await Autonomy.findOne({
-			name,
-			date,
+			where: {
+				autonomy: name,
+				date,
+			},
 		});
 		if (!autonomy_) {
 			return res.status(401).send('autonomy does not exist');

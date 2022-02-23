@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Autonomy } from '../../models/autonomy';
-import { _Date } from '../../models/date';
+import { Date as _Date } from '../../models/date';
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
 
@@ -24,20 +24,15 @@ router.post(
 			.replace('/', '-');
 
 		console.log('req.body ===> ', req.body);
-		const autonomy = Autonomy.build({
+		Autonomy.create({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
-		});
-
-		addToCsv(autonomy.toObject());
-
-		autonomy
-			.save()
-			.then(async () => {
-				const _date_ = _Date.build({
+		})
+			.then(async (autonomy) => {
+				addToCsv(autonomy);
+				await _Date.create({
 					date_artifact: req.body.date ? req.body.date : date,
 				});
-				await _date_.save();
 				return res.status(201).send(autonomy);
 			})
 			.catch((err) => {

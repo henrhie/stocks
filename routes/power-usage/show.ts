@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { _Date } from '../../models/date';
+import { Date as _Date } from '../../models/date';
 import { PowerUsage } from '../../models/power-usage';
 import { requireAuth } from '../auth/require-auth';
 
@@ -10,7 +10,7 @@ router.get(
 	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const powerUsage = await PowerUsage.find({ date });
+		const powerUsage = await PowerUsage.findAll({ where: { date } });
 		if (!powerUsage) {
 			return res.send('not entries found');
 		}

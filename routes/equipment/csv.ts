@@ -12,14 +12,12 @@ router.get(
 	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const equipment = await Equipment.find({ date });
+		const equipment = await Equipment.findAll({ where: { date } });
 		if (!equipment) {
 			throw new Error('not entries for this date');
 		}
 		const _equipment_ = equipment.map((doc) => {
-			const row = doc.toObject();
-			delete row.__v;
-			delete row._id;
+			const row = doc;
 			return row;
 		});
 		const csvFile = generateCsv(_equipment_);

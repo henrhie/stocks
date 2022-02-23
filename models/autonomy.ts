@@ -5,7 +5,7 @@ import {
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelize } from '../index';
+import { sequelizeInstance } from './sequelizeInstance';
 class Autonomy extends Model<
 	InferAttributes<Autonomy>,
 	InferCreationAttributes<Autonomy>
@@ -17,35 +17,6 @@ class Autonomy extends Model<
 	declare date: string;
 	declare user: string;
 }
-
-Autonomy.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		autonomy: {
-			type: DataTypes.STRING,
-		},
-		value: {
-			type: DataTypes.NUMBER,
-		},
-		autonomy_rmks: {
-			type: DataTypes.STRING,
-		},
-		date: {
-			type: DataTypes.STRING,
-		},
-		user: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'Automony',
-	}
-);
 
 export { Autonomy };
 

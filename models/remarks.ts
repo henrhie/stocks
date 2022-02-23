@@ -5,7 +5,7 @@ import {
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelize } from '../index';
+import { sequelizeInstance } from './sequelizeInstance';
 class Remarks extends Model<
 	InferAttributes<Remarks>,
 	InferCreationAttributes<Remarks>
@@ -13,23 +13,6 @@ class Remarks extends Model<
 	declare id: CreationOptional<number>;
 	declare remark: string;
 }
-
-Remarks.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		remark: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'Remarks',
-	}
-);
 
 export { Remarks };
 

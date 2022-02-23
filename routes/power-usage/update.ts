@@ -17,7 +17,7 @@ router.put(
 	requireAuth,
 	async (req: Request<{ date: string }, {}, ReqBody>, res: Response) => {
 		const { date } = req.params;
-		const powerUsage = await PowerUsage.findOne({ date });
+		const powerUsage = await PowerUsage.findOne({ where: { date } });
 		if (!powerUsage) {
 			return res.send('power usage does not exist');
 		}

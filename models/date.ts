@@ -5,28 +5,11 @@ import {
 	InferAttributes,
 	InferCreationAttributes,
 } from 'sequelize';
-import { sequelize } from '../index';
+import { sequelizeInstance } from './sequelizeInstance';
 class Date extends Model<InferAttributes<Date>, InferCreationAttributes<Date>> {
 	declare id: CreationOptional<number>;
 	declare date_artifact: string;
 }
-
-Date.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		date_artifact: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'Date',
-	}
-);
 
 export { Date };
 

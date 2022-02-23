@@ -11,7 +11,9 @@ router.delete(
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
 
-		const equipment = await Equipment.deleteOne({ equipment_name: name, date });
+		const equipment = await Equipment.destroy({
+			where: { equipment_name: name, date },
+		});
 		if (!equipment) {
 			throw new Error('could not find equipment to delete');
 		}

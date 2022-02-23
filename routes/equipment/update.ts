@@ -33,7 +33,9 @@ router.put(
 		res: Response
 	) => {
 		const { name, date } = req.params;
-		const equipment = await Equipment.findOne({ equipment_name: name, date });
+		const equipment = await Equipment.findOne({
+			where: { equipment_name: name, date },
+		});
 		if (!equipment) {
 			throw new Error('equipment does not exist');
 		}

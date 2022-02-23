@@ -18,29 +18,36 @@ router.post(
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		const { name, username, password, access_level } = req.body;
 
-		const existingUser = await User.findOne({ username });
-		if (existingUser) {
-			return res.send('user with this username already exists');
+		try {
+			const existingUser = await User.findOne({ where: { username } });
+			if (existingUser) {
+				return res.send('user with this username already exists');
+			}
+		} catch (error: any) {
+			return res.status(404).send(error.message);
 		}
 
-		User.build({
+		User.create({
 			name,
 			username,
 			password,
 			access_level,
-		}).save((err, user) => {
-			const userJwt = jwt.sign(
-				{
-					id: user.id,
-					username: user.username,
-					name: name,
-					access_level: user.access_level,
-				},
-				token
-			);
-			// req.session = { jwt: userJwt };
-			res.status(201).send({ user, token: userJwt });
-		});
+		})
+			.then((user) => {
+				const userJwt = jwt.sign(
+					{
+						id: user.id,
+						username: user.username,
+						name: name,
+						access_level: user.access_level,
+					},
+					token
+				);
+				res.status(201).send({ user, token: userJwt });
+			})
+			.catch((err) => {
+				res.status(404).send(err.message);
+			});
 	}
 );
 

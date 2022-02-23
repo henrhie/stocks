@@ -1,8 +1,5 @@
 import express, { Request, Response } from 'express';
-import { _Date } from '../../models/date';
-import { PowerUsage } from '../../models/power-usage';
 import { Remarks } from '../../models/remarks';
-import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -15,13 +12,11 @@ router.post(
 		res: Response
 	) => {
 		console.log('req.body ===>: ', req.body);
-		const remark = Remarks.build({
+		Remarks.create({
 			...req.body.payload,
-		});
-		const remarks = await Remarks.find();
-		remark
-			.save()
-			.then(async () => {
+		})
+			.then(async (remark) => {
+				const remarks = await Remarks.findAll();
 				return res.status(201).send(remarks);
 			})
 			.catch((err) => {

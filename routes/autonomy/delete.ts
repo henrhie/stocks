@@ -9,11 +9,13 @@ router.delete(
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
-		const autonomy = await Autonomy.deleteOne({
-			name,
-			date,
+		const autonomy = await Autonomy.destroy({
+			where: {
+				autonomy: name,
+				date,
+			},
 		});
-		const autonomies = await Autonomy.find();
+		const autonomies = await Autonomy.findAll();
 		return res.send(autonomies);
 	}
 );

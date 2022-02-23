@@ -9,7 +9,7 @@ router.delete(
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { date } = req.params;
-		const powerUsage = await PowerUsage.deleteOne({ date });
+		const powerUsage = await PowerUsage.destroy({ where: { date } });
 
 		if (!powerUsage) {
 			res.send('could not find power usage to delete');

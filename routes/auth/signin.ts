@@ -16,9 +16,9 @@ router.post(
 	'/api/users/signin',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		const { username, password } = req.body;
-		const user = await User.findOne({ username });
+		const user = await User.findOne({ where: { username } });
 		if (!user) {
-			throw new Error('email or password is incorrect');
+			return res.send('username or password is incorrect');
 		}
 
 		const match = await Password.compare(user.password, password);

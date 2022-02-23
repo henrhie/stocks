@@ -5,8 +5,8 @@ import {
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelize } from '../index';
-import { Password } from '../services/password';
+// import { sequelizeInstance } from './sequelizeInstance';
+// import { Password } from '../services/password';
 
 interface UserAttributes {
 	name: string;
@@ -23,36 +23,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 	declare access_level: string;
 }
 
-User.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		name: {
-			type: DataTypes.STRING,
-		},
-		username: {
-			type: DataTypes.STRING,
-		},
-		password: {
-			type: DataTypes.STRING,
-		},
-		access_level: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'User',
-	}
-);
-
-User.beforeCreate(async (user) => {
-	const hashed = await Password.toHash(user.password);
-	user.password = hashed;
-});
 export { User };
 
 // import mongoose = require('mongoose');

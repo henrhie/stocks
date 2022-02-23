@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { _Date } from '../../models/date';
+import { Date as _Date } from '../../models/date';
 import { Equipment } from '../../models/equipment';
 import { requireAuth } from '../auth/require-auth';
 
@@ -10,7 +10,9 @@ router.get(
 	requireAuth,
 	async (req: Request<{ name: string; date: string }>, res: Response) => {
 		const { name, date } = req.params;
-		const equipment = await Equipment.findOne({ equipment_name: name, date });
+		const equipment = await Equipment.findOne({
+			where: { equipment_name: name, date },
+		});
 		console.log(equipment);
 		if (!equipment) {
 			throw new Error('could not find equipment');
@@ -23,11 +25,11 @@ router.get(
 	'/api/equipment/:date',
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const equipment = await Equipment.find({ date });
+		const equipment = await Equipment.findAll({ where: { date } });
 		if (!equipment) {
 			throw new Error('could not find equipment');
 		}
-		const _dates_ = await _Date.find({});
+		const _dates_ = await _Date.findAll();
 		let _dates = _dates_.map((date) => date.date_artifact);
 		_dates = [...new Set(_dates)];
 		if (!_dates) {

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
-import { _Date } from '../../models/date';
+import { Date as _Date } from '../../models/date';
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
 
@@ -18,14 +18,14 @@ const equipmentToKVA: any = {
 interface ReqBody {
 	equipment_name: string;
 	date: string;
-	current_l1?: number;
-	current_l2?: number;
-	current_l3?: number;
-	power_kw?: number;
+	current_l1: number;
+	current_l2: number;
+	current_l3: number;
+	power_kw: number;
 	power_kva: string;
-	utilization?: number;
-	equipment_rmks?: string;
-	username?: string;
+	utilization: number;
+	equipment_rmks: string;
+	username: string;
 }
 
 router.post(
@@ -41,23 +41,19 @@ router.post(
 				equipmentToKVA[req.body.equipment_name]) *
 			100;
 		const utilization = req.body.power_kva ? parseFloat(util_.toFixed(2)) : 0;
-		const equipment = Equipment.build({
+		Equipment.create({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
 			utilization,
-			remark: req.body.equipment_rmks,
+			remark: req.body.equipment_rmks || '',
 			power_kva: parseFloat(req.body.power_kva),
-		});
-
-		addToCsv(equipment.toObject());
-
-		equipment
-			.save()
-			.then(async () => {
-				const _date_ = _Date.build({
+			user: req.body.username,
+		})
+			.then(async (equipment) => {
+				addToCsv(equipment);
+				await _Date.create({
 					date_artifact: req.body.date ? req.body.date : date,
 				});
-				await _date_.save();
 				return res.status(201).send(equipment);
 			})
 			.catch((err) => {

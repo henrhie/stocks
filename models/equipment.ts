@@ -5,7 +5,7 @@ import {
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelize } from '../index';
+import { sequelizeInstance } from './sequelizeInstance';
 class Equipment extends Model<
 	InferAttributes<Equipment>,
 	InferCreationAttributes<Equipment>
@@ -22,50 +22,6 @@ class Equipment extends Model<
 	declare remark: string;
 	declare user: string;
 }
-
-Equipment.init(
-	{
-		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
-			autoIncrement: true,
-			primaryKey: true,
-		},
-		equipment_name: {
-			type: DataTypes.STRING,
-		},
-		date: {
-			type: DataTypes.STRING,
-		},
-		current_l1: {
-			type: DataTypes.NUMBER,
-		},
-		current_l2: {
-			type: DataTypes.NUMBER,
-		},
-		current_l3: {
-			type: DataTypes.NUMBER,
-		},
-		power_kw: {
-			type: DataTypes.NUMBER,
-		},
-		power_kva: {
-			type: DataTypes.NUMBER,
-		},
-		utilization: {
-			type: DataTypes.NUMBER,
-		},
-		remark: {
-			type: DataTypes.STRING,
-		},
-		user: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		sequelize,
-		modelName: 'Equipment',
-	}
-);
 
 export { Equipment };
 
