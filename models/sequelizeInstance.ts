@@ -200,6 +200,13 @@ let sequelizeInstance: Sequelize;
 			tableName: 'User',
 		}
 	);
+	await User.sync();
+	await PowerUsage.sync();
+	await Remarks.sync();
+	await Autonomy.sync();
+	await Date_.sync();
+	await Equipment.sync();
+
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);
 		user.password = hashed;

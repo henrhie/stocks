@@ -24,7 +24,7 @@ router.post(
 				return res.send('user with this username already exists');
 			}
 		} catch (error: any) {
-			return res.status(404).send(error.message);
+			return res.status(404).send(error);
 		}
 
 		User.create({
@@ -43,10 +43,11 @@ router.post(
 					},
 					token
 				);
+				user.password = '';
 				res.status(201).send({ user, token: userJwt });
 			})
 			.catch((err) => {
-				res.status(404).send(err.message);
+				res.status(404).send(err);
 			});
 	}
 );
