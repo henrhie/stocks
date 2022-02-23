@@ -11,10 +11,7 @@ router.delete(
 		const { date } = req.params;
 		const powerUsage = await PowerUsage.destroy({ where: { date } });
 
-		if (!powerUsage) {
-			res.send('could not find power usage to delete');
-		}
-		res.send(powerUsage);
+		res.send({ powerUsage });
 	}
 );
 

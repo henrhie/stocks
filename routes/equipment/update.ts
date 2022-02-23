@@ -5,24 +5,23 @@ import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
-const equipmentToKVA: any = {
-	'AVR 1 (350 KvA)': 250.0,
-	'AVR 2 (350 KvA)': 250.0,
-	'UPS A (120 KvA)': 120.0,
-	'UPS B (120 KvA)': 120.0,
-	'Genset A (400 KvA)': 400.0,
-	'Genset B (400 KvA)': 400.0,
+const equipmentToKVA: { [key: string]: number } = {
+	'AVR 1 (250 kVA)': 250.0,
+	'AVR 2 (250 kVA)': 250.0,
+	'UPS A (120 kVA)': 120.0,
+	'UPS B (120 kVA)': 120.0,
+	'Genset A (400 kVA)': 400.0,
+	'Genset B (400 kVA)': 400.0,
 };
 
 interface ReqBody {
-	equipment_name?: string;
-	current_l1?: number;
-	current_l2?: number;
-	current_l3?: number;
-	power_kw?: number;
-	power_kva?: number;
-	utilization?: number;
-	remark?: string;
+	equipment_name: string;
+	current_l1: number;
+	current_l2: number;
+	current_l3: number;
+	power_kw: number;
+	power_kva: number;
+	remark: string;
 }
 
 router.put(
@@ -40,25 +39,30 @@ router.put(
 			throw new Error('equipment does not exist');
 		}
 
-		const { current_l1, current_l2, current_l3, power_kva, power_kw, remark } =
-			req.body;
+		const {
+			current_l1,
+			current_l2,
+			current_l3,
+			power_kva,
+			power_kw,
+			remark,
+			equipment_name,
+		} = req.body;
+
+		const util_ = (power_kva / equipmentToKVA[equipment_name]) * 100;
+		const utilization = parseFloat(util_.toFixed(2));
+		console.log(equipmentToKVA[equipment_name]);
+		console.log(typeof utilization);
 
 		equipment.set({
 			equipment_name: req.body.equipment_name,
-			current_l1: current_l1 ? current_l1 : equipment.current_l1,
-			current_l2: current_l2 ? current_l2 : equipment.current_l2,
-			current_l3: current_l3 ? current_l3 : equipment.current_l3,
-			power_kva: power_kva ? power_kva : equipment.power_kva,
-			power_kw: power_kw ? power_kw : equipment.power_kw,
-			remark: remark ? remark : equipment.remark,
-			utilization:
-				req.body.power_kva && req.body.equipment_name
-					? parseFloat(
-							(
-								req.body.power_kva / equipmentToKVA[req.body.equipment_name]
-							).toFixed(2)
-					  )
-					: 0,
+			current_l1: current_l1,
+			current_l2: current_l2,
+			current_l3: current_l3,
+			power_kva: power_kva,
+			power_kw: power_kw,
+			remark: remark,
+			utilization,
 		});
 
 		await equipment.save();

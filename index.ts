@@ -27,7 +27,6 @@ import { updateAutonomyRouter } from './routes/autonomy/update';
 import { addRemarkRouter } from './routes/remarks/add';
 import { showRemarksRouter } from './routes/remarks/show';
 
-import { Sequelize } from 'sequelize';
 import './models/sequelizeInstance';
 
 const app = express();
@@ -65,16 +64,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 	console.log(`server running on port ${PORT}`);
 });
-
-// (async function () {
-// 	try {
-// 		await sequelize.authenticate();
-
-// 		console.log('Connection to db has been established successfully.');
-//
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// })();
-
-// export { sequelize as sequelizeInstance };

@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { Equipment } from '../../models/equipment';
-import { User } from '../../models/user';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -11,13 +10,10 @@ router.delete(
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
 
-		const equipment = await Equipment.destroy({
+		const equipmentNumber = await Equipment.destroy({
 			where: { equipment_name: name, date },
 		});
-		if (!equipment) {
-			throw new Error('could not find equipment to delete');
-		}
-		res.send(equipment);
+		res.send({ deleteNumber: equipmentNumber });
 	}
 );
 

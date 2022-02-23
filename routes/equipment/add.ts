@@ -25,7 +25,7 @@ interface ReqBody {
 	power_kva: string;
 	utilization: number;
 	equipment_rmks: string;
-	username: string;
+	user: string;
 }
 
 router.post(
@@ -47,7 +47,7 @@ router.post(
 			utilization,
 			remark: req.body.equipment_rmks || '',
 			power_kva: parseFloat(req.body.power_kva),
-			user: req.body.username,
+			user: req.body.user,
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);
