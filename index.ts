@@ -1,13 +1,12 @@
 import express from 'express';
-import mongoose = require('mongoose');
-// import cookieSession from 'cookie-session';
+
+import path from 'path';
 
 import { addRouter } from './routes/equipment/add';
 import { updateRouter } from './routes/equipment/update';
 import { deleteRouter } from './routes/equipment/delete';
 import { csvRouter } from './routes/equipment/csv';
 
-import { mongoURL } from './env/secrets';
 import { showRouter } from './routes/equipment/show';
 
 import cors from 'cors';
@@ -58,6 +57,11 @@ app.use(updateRouter);
 app.use(deleteRouter);
 app.use(csvRouter);
 app.use(showRouter);
+
+app.use(express.static(path.join(__dirname, '_static')));
+app.get('*', function (req, res) {
+	res.sendFile(path.join(__dirname, '_static/index.html'));
+});
 
 const PORT = process.env.PORT || 8080;
 
