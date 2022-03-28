@@ -9,7 +9,7 @@
 	"scripts": {
 		"server": "node dist/index.js",
 		"start:dev": "ts-node-dev index.ts",
-		"start": "npm run server",
+		"start": "npm run build && npm run server",
 		"build": "tsc"
 	},
 	"keywords": [
