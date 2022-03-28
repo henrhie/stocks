@@ -8,17 +8,19 @@ import { User } from './user';
 import { Autonomy } from './autonomy';
 import { Password } from '../services/password';
 
+const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME} = process.env
+
 const createInstance = async () => {
 	const sequelize = new Sequelize({
-		database: 'portaldb',
+		database: DATABASE,
 		dialect: 'mssql',
-		host: 'ghaprodwebserv2',
-		username: 'sa',
-		password: 'dbwebADMIN1234',
+		host: HOST,
+		username: USER,
+		password: PASSWORD,
 		dialectModulePath: 'tedious',
 		dialectOptions: {
 			options: {
-				instanceName: 'mssqlserver2',
+				instanceName: INSTANCE_NAME,
 			},
 		},
 	});
