@@ -1,33 +1,33 @@
 import express, { Request, Response } from 'express';
 import { Date as _Date } from '../../models/date';
-import { Equipment } from '../../models/equipment';
+import { Issued } from '../../models/issued';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 router.get(
-	'/api/equipment/:date/:name',
+	'/api/issued/:date/:name',
 	requireAuth,
 	async (req: Request<{ name: string; date: string }>, res: Response) => {
 		const { name, date } = req.params;
-		const equipment = await Equipment.findOne({
-			where: { equipment_name: name, date },
+		const issued = await Issued.findOne({
+			where: { stockName: name, date },
 		});
-		console.log(equipment);
-		if (!equipment) {
-			throw new Error('could not find equipment');
+		console.log(issued);
+		if (!issued) {
+			throw new Error('could not find issued');
 		}
-		return res.send(equipment);
+		return res.send(issued);
 	}
 );
 
 router.get(
-	'/api/equipment/:date',
+	'/api/issued/:date',
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const equipment = await Equipment.findAll({ where: { date } });
-		if (!equipment) {
-			throw new Error('could not find equipment');
+		const issued = await Issued.findAll({ where: { date } });
+		if (!issued) {
+			throw new Error('could not find issued');
 		}
 		const _dates_ = await _Date.findAll();
 		let _dates = _dates_.map((date) => date.date_artifact);
@@ -35,8 +35,8 @@ router.get(
 		if (!_dates) {
 			throw new Error('not date entries');
 		}
-		return res.send({ equipment, dates: _dates });
+		return res.send({ issued, dates: _dates });
 	}
 );
 
-export { router as showRouter };
+export { router as showIssuedRouter };

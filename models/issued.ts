@@ -1,26 +1,23 @@
 import {
-	DataTypes,
 	Model,
 	InferAttributes,
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelizeInstance } from './sequelizeInstance';
-class PowerUsage extends Model<
-	InferAttributes<PowerUsage>,
-	InferCreationAttributes<PowerUsage>
+class Issued extends Model<
+	InferAttributes<Issued>,
+	InferCreationAttributes<Issued>
 > {
 	declare id: CreationOptional<number>;
-	declare facility: string;
+	declare stockName: string;
 	declare date: string;
-	declare server_cons: number;
-	declare total_cons: number;
-	declare facility_rmks: string;
-	declare pue: number;
+	declare serialNumber: string;
+	declare issuedBy: string;
+	declare issuedTo: string;
 	declare user: string;
 }
 
-export { PowerUsage };
+export { Issued };
 
 // import mongoose = require('mongoose');
 

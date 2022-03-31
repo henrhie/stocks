@@ -1,18 +1,18 @@
 import express, { Request, Response } from 'express';
-import { PowerUsage } from '../../models/power-usage';
+import { Stock } from '../../models/stock';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 router.delete(
-	'/api/power-usage/:date',
+	'/api/stock/:date',
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { date } = req.params;
-		const powerUsage = await PowerUsage.destroy({ where: { date } });
+		const stock = await Stock.destroy({ where: { date } });
 
-		res.send({ powerUsage });
+		res.send({ stock });
 	}
 );
 
-export { router as deletePowerUsageRouter };
+export { router as deleteStockRouter };

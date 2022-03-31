@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { writeFile } from 'fs';
-import { Equipment } from '../../models/equipment';
+import { Issued } from '../../models/issued';
 
 import { generateCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
@@ -8,19 +8,19 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/equipment/csv/:date',
+	'/api/issued/csv/:date',
 	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const equipment = await Equipment.findAll({ where: { date } });
-		if (!equipment) {
+		const issued = await Issued.findAll({ where: { date } });
+		if (!issued) {
 			throw new Error('not entries for this date');
 		}
-		const _equipment_ = equipment.map((doc) => {
+		const _issued_ = issued.map((doc) => {
 			const row = doc;
 			return row;
 		});
-		const csvFile = generateCsv(_equipment_);
+		const csvFile = generateCsv(_issued_);
 		writeFile('splunk.data.csv', csvFile, function (err) {
 			if (err) {
 				return res.status(501).send('bad file!');

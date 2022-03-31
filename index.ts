@@ -2,30 +2,38 @@ require('dotenv').config();
 import express from 'express';
 
 import path from 'path';
-
-import { addRouter } from './routes/equipment/add';
-import { updateRouter } from './routes/equipment/update';
-import { deleteRouter } from './routes/equipment/delete';
-import { csvRouter } from './routes/equipment/csv';
-
-import { showRouter } from './routes/equipment/show';
-
 import cors from 'cors';
+
+import { addIssuedRouter } from './routes/issued/add';
+import { updateIssuedRouter } from './routes/issued/update';
+import { deleteIssuedRouter } from './routes/issued/delete';
+import { showIssuedRouter } from './routes/issued/show';
+
+
+import { addReceivedRouter } from './routes/received/add';
+import { deleteReceivedRouter } from './routes/received/delete';
+import { showReceivedRouter } from './routes/received/show';
+import { updateReceivedRouter } from './routes/received/update';
+
+
+import { addStockRouter } from './routes/stock/add';
+import { deleteStockRouter } from './routes/stock/delete';
+import { showStockRouter } from './routes/stock/show';
+import { updateStockRouter } from './routes/stock/update';
+
+
+import { addRemarkRouter } from './routes/remarks/add';
+import { showRemarksRouter } from './routes/remarks/show';
+
+
+import { csvRouter } from './routes/issued/csv';
+
 import { SigninRouter } from './routes/auth/signin';
 import { SignoutRouter } from './routes/auth/signout';
 import { SignupRouter } from './routes/auth/signup';
 import { currentUserRouter } from './routes/auth/current-user';
 import { validateUser } from './routes/auth/validate-user';
-import { addAutonomyRouter } from './routes/autonomy/add';
-import { deleteAutonomyRouter } from './routes/autonomy/delete';
-import { showAutonomyRouter } from './routes/autonomy/show';
-import { addPowerUsageRouter } from './routes/power-usage/add';
-import { deletePowerUsageRouter } from './routes/power-usage/delete';
-import { showPowerUsageRouter } from './routes/power-usage/show';
-import { updatePowerUsageRouter } from './routes/power-usage/update';
-import { updateAutonomyRouter } from './routes/autonomy/update';
-import { addRemarkRouter } from './routes/remarks/add';
-import { showRemarksRouter } from './routes/remarks/show';
+
 
 import './models/sequelizeInstance';
 
@@ -39,25 +47,25 @@ app.use(validateUser);
 app.use(addRemarkRouter);
 app.use(showRemarksRouter);
 
-app.use(addAutonomyRouter);
-app.use(deleteAutonomyRouter);
-app.use(showAutonomyRouter);
-app.use(addPowerUsageRouter);
-app.use(deletePowerUsageRouter);
-app.use(showPowerUsageRouter);
-app.use(updatePowerUsageRouter);
-app.use(updateAutonomyRouter);
+app.use(addIssuedRouter);
+app.use(updateIssuedRouter);
+app.use(deleteIssuedRouter);
+app.use(showIssuedRouter);
+app.use(addReceivedRouter);
+app.use(deleteReceivedRouter);
+app.use(showReceivedRouter);
+app.use(updateReceivedRouter);
 
 app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SignoutRouter);
 app.use(SigninRouter);
 
-app.use(addRouter);
-app.use(updateRouter);
-app.use(deleteRouter);
+app.use(addStockRouter);
+app.use(deleteStockRouter);
+app.use(showStockRouter);
 app.use(csvRouter);
-app.use(showRouter);
+app.use(updateStockRouter);
 
 app.use(express.static(path.join(__dirname, '_static')));
 app.get('*', function (req, res) {

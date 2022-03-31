@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Equipment } from '../../models/equipment';
+import { Issued } from '../../models/issued';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -10,11 +10,11 @@ router.delete(
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
 
-		const equipmentNumber = await Equipment.destroy({
-			where: { equipment_name: name, date },
+		const issuedNumber = await Issued.destroy({
+			where: { stockName: name, date },
 		});
-		res.send({ deleteNumber: equipmentNumber });
+		res.send({ deleteNumber: issuedNumber });
 	}
 );
 
-export { router as deleteRouter };
+export { router as deleteIssuedRouter };

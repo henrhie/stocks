@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Autonomy } from '../../models/autonomy';
+import { Received } from '../../models/received';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -9,15 +9,15 @@ router.delete(
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { name, date } = req.params;
-		const autonomy = await Autonomy.destroy({
+		const _ = await Received.destroy({
 			where: {
-				autonomy: name,
+				stockName: name,
 				date,
 			},
 		});
-		const autonomies = await Autonomy.findAll();
-		return res.send(autonomies);
+		const receivedItems = await Received.findAll();
+		return res.send(receivedItems);
 	}
 );
 
-export { router as deleteAutonomyRouter };
+export { router as deleteReceivedRouter };

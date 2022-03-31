@@ -1,24 +1,23 @@
 import {
-	DataTypes,
 	Model,
 	InferAttributes,
 	InferCreationAttributes,
 	CreationOptional,
 } from 'sequelize';
-import { sequelizeInstance } from './sequelizeInstance';
-class Autonomy extends Model<
-	InferAttributes<Autonomy>,
-	InferCreationAttributes<Autonomy>
+class Received extends Model<
+	InferAttributes<Received>,
+	InferCreationAttributes<Received>
 > {
 	declare id: CreationOptional<number>;
-	declare autonomy: string;
-	declare value: number;
-	declare autonomy_rmks: string;
+	declare stockName: string;
+	declare serialNumber: string;
+	declare receivedBy: string;
 	declare date: string;
-	declare user: string;
+	declare totalReceived: number;
+	declare user: string
 }
 
-export { Autonomy };
+export { Received };
 
 // import mongoose = require('mongoose');
 

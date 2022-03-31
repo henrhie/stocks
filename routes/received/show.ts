@@ -1,38 +1,38 @@
 import express, { Request, Response } from 'express';
-import { Autonomy } from '../../models/autonomy';
+import { Received } from '../../models/received';
 import { Date as _Date } from '../../models/date';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
 router.get(
-	'/api/autonomy/:date/:name',
+	'/api/received/:date/:name',
 	requireAuth,
 	async (req: Request<{ name: string; date: string }>, res: Response) => {
 		const { name, date } = req.params;
-		const autonomy_ = await Autonomy.findOne({
+		const received_ = await Received.findOne({
 			where: {
-				autonomy: name,
+				stockName: name,
 				date,
 			},
 		});
-		if (!autonomy_) {
+		if (!received_) {
 			return res.status(401).send('not found');
 		}
-		return res.send(autonomy_);
+		return res.send(received_);
 	}
 );
 
 router.get(
-	'/api/autonomy/:date',
+	'/api/received/:date',
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;
-		const autonomy = await Autonomy.findAll({ where: { date } });
-		if (!autonomy) {
+		const received = await Received.findAll({ where: { date } });
+		if (!received) {
 			return res.status(401).send('not found');
 		}
-		return res.send({ autonomy });
+		return res.send({ received });
 	}
 );
 
-export { router as showAutonomyRouter };
+export { router as showReceivedRouter };

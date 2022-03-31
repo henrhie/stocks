@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 import { Remarks } from './remarks';
 import { DataTypes } from 'sequelize';
-import { PowerUsage } from './power-usage';
+import { Issued } from './issued';
 import { Date as Date_ } from './date';
-import { Equipment } from './equipment';
+import { Stock } from './stock';
 import { User } from './user';
-import { Autonomy } from './autonomy';
+import { Received } from './received';
 import { Password } from '../services/password';
 
 const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME} = process.env
@@ -54,20 +54,23 @@ let sequelizeInstance: Sequelize;
 			modelName: 'Remarks',
 		}
 	);
-	Autonomy.init(
+	Issued.init(
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				autoIncrement: true,
 				primaryKey: true,
 			},
-			autonomy: {
+			stockName: {
 				type: DataTypes.STRING,
 			},
-			value: {
-				type: DataTypes.FLOAT,
+			issuedBy: {
+				type: DataTypes.STRING,
 			},
-			autonomy_rmks: {
+			issuedTo: {
+				type: DataTypes.STRING,
+			},
+			serialNumber: {
 				type: DataTypes.STRING,
 			},
 			date: {
@@ -79,7 +82,7 @@ let sequelizeInstance: Sequelize;
 		},
 		{
 			sequelize: sequelizeInstance,
-			modelName: 'Automony',
+			modelName: 'Issued',
 		}
 	);
 	Date_.init(
@@ -98,71 +101,51 @@ let sequelizeInstance: Sequelize;
 			modelName: 'Date',
 		}
 	);
-	Equipment.init(
+	Received.init(
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				autoIncrement: true,
 				primaryKey: true,
 			},
-			equipment_name: {
+			stockName: {
 				type: DataTypes.STRING,
 			},
 			date: {
 				type: DataTypes.STRING,
 			},
-			current_l1: {
-				type: DataTypes.FLOAT,
+			serialNumber: {
+				type: DataTypes.STRING,
 			},
-			current_l2: {
-				type: DataTypes.FLOAT,
-			},
-			current_l3: {
-				type: DataTypes.FLOAT,
-			},
-			power_kw: {
-				type: DataTypes.FLOAT,
-			},
-			power_kva: {
-				type: DataTypes.FLOAT,
-			},
-			utilization: {
-				type: DataTypes.FLOAT,
-			},
-			remark: {
+			receivedBy: {
 				type: DataTypes.STRING,
 			},
 			user: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
+			totalReceived: {
+				type: DataTypes.NUMBER,
+				allowNull: false,
+			},
 		},
 		{
-			modelName: 'Equipment',
+			modelName: 'Received',
 			sequelize: sequelizeInstance,
 		}
 	);
-	PowerUsage.init(
+	Stock.init(
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				autoIncrement: true,
 				primaryKey: true,
 			},
-			facility: {
+			stockName: {
 				type: DataTypes.STRING,
 			},
-			server_cons: {
-				type: DataTypes.FLOAT,
-			},
-			total_cons: {
-				type: DataTypes.FLOAT,
-			},
-			facility_rmks: {
-				type: DataTypes.STRING,
-			},
-			pue: {
-				type: DataTypes.FLOAT,
+			totalAvailableNumber: {
+				type: DataTypes.NUMBER,
 			},
 			date: {
 				type: DataTypes.STRING,
@@ -203,11 +186,11 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await PowerUsage.sync();
+	await Issued.sync();
 	await Remarks.sync();
-	await Autonomy.sync();
+	await Received.sync();
 	await Date_.sync();
-	await Equipment.sync();
+	await Stock.sync();
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);
