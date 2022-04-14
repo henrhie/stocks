@@ -11,11 +11,11 @@ interface ReqBody {
 }
 
 router.put(
-	'/api/stock/:date',
+	'/api/stock/:serial',
 	requireAuth,
-	async (req: Request<{ date: string }, {}, ReqBody>, res: Response) => {
-		const { date } = req.params;
-		const stock = await Stock.findOne({ where: { date } });
+	async (req: Request<{ serial: string }, {}, ReqBody>, res: Response) => {
+		const { serial } = req.params;
+		const stock = await Stock.findOne({ where: { serialNumber: serial } });
 		if (!stock) {
 			return res.send('entry does not exist');
 		}

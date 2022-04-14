@@ -124,10 +124,6 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			totalReceived: {
-				type: DataTypes.NUMBER,
-				allowNull: false,
-			},
 		},
 		{
 			modelName: 'Received',
@@ -145,7 +141,7 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 			},
 			totalAvailableNumber: {
-				type: DataTypes.NUMBER,
+				type: DataTypes.INTEGER,
 			},
 			date: {
 				type: DataTypes.STRING,
@@ -153,6 +149,9 @@ let sequelizeInstance: Sequelize;
 			user: {
 				type: DataTypes.STRING,
 			},
+			serialNumber: {
+				type: DataTypes.STRING,
+			}
 		},
 		{
 			sequelize: sequelizeInstance,

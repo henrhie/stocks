@@ -6,14 +6,13 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/received/:date/:name',
+	'/api/received/:serial',
 	requireAuth,
-	async (req: Request<{ name: string; date: string }>, res: Response) => {
-		const { name, date } = req.params;
+	async (req: Request<{ serial: string }>, res: Response) => {
+		const { serial } = req.params;
 		const received_ = await Received.findOne({
 			where: {
-				stockName: name,
-				date,
+				serialNumber: serial
 			},
 		});
 		if (!received_) {
@@ -24,10 +23,9 @@ router.get(
 );
 
 router.get(
-	'/api/received/:date',
-	async (req: Request<{ date: string }>, res: Response) => {
-		const { date } = req.params;
-		const received = await Received.findAll({ where: { date } });
+	'/api/received',
+	async (req: Request, res: Response) => {
+		const received = await Received.findAll();
 		if (!received) {
 			return res.status(401).send('not found');
 		}

@@ -5,14 +5,13 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/autonomy/:date/:name',
+	'/api/autonomy/:serial',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { name, date } = req.params;
+		const { serial } = req.params;
 		const _ = await Received.destroy({
 			where: {
-				stockName: name,
-				date,
+				stockName: serial,
 			},
 		});
 		const receivedItems = await Received.findAll();

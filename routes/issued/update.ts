@@ -23,15 +23,15 @@ interface ReqBody {
 }
 
 router.put(
-	'/api/equipment/:date/:name',
+	'/api/equipment/:name',
 	requireAuth,
 	async (
-		req: Request<{ name: string; date: string }, {}, ReqBody>,
+		req: Request<{ serial: string }, {}, ReqBody>,
 		res: Response
 	) => {
-		const { name, date } = req.params;
+		const { serial } = req.params;
 		const issued = await Issued.findOne({
-			where: { stockName: name, date },
+			where: { serialNumber: serial },
 		});
 		if (!issued) {
 			throw new Error('equipment does not exist');

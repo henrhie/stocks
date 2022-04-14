@@ -8,7 +8,7 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/issued/csv/:date',
+	'/api/issued/csv',
 	requireAuth,
 	async (req: Request<{ date: string }>, res: Response) => {
 		const { date } = req.params;

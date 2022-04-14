@@ -67,10 +67,10 @@ app.use(showStockRouter);
 app.use(csvRouter);
 app.use(updateStockRouter);
 
-app.use(express.static(path.join(__dirname, '_static')));
-app.get('*', function (req, res) {
-	res.sendFile(path.join(__dirname, '_static/index.html'));
-});
+// app.use(express.static(path.join(__dirname, '_static')));
+// app.get('*', function (req, res) {
+// 	res.sendFile(path.join(__dirname, '_static/index.html'));
+// });
 
 const PORT = process.env.PORT || 8080;
 

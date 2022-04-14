@@ -14,17 +14,16 @@ interface ReqBody {
 }
 
 router.put(
-	'/api/received/:date/:name',
+	'/api/received/:serial',
 	requireAuth,
 	async (
-		req: Request<{ name: string; date: string }, {}, ReqBody>,
+		req: Request<{ serial: string }, {}, ReqBody>,
 		res: Response
 	) => {
-		const { name, date } = req.params;
+		const { serial } = req.params;
 		const received_ = await Received.findOne({
 			where: {
-				stockName: name,
-				date,
+				stockName: serial,
 			},
 		});
 		if (!received_) {
@@ -37,7 +36,6 @@ router.put(
 			stockName: stockName ? stockName : received_.stockName,
 			serialNumber: serialNumber ? serialNumber : received_.serialNumber,
 			receivedBy: receivedBy ? receivedBy : received_.receivedBy,
-			totalReceived: totalReceived ? totalReceived : received_.totalReceived,
 		});
 
 		await received_.save();

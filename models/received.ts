@@ -13,7 +13,6 @@ class Received extends Model<
 	declare serialNumber: string;
 	declare receivedBy: string;
 	declare date: string;
-	declare totalReceived: number;
 	declare user: string
 }
 

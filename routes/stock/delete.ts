@@ -5,11 +5,11 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/stock/:date',
+	'/api/stock/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { date } = req.params;
-		const stock = await Stock.destroy({ where: { date } });
+		const { name } = req.params;
+		const stock = await Stock.destroy({ where: { stockName: name } });
 
 		res.send({ stock });
 	}

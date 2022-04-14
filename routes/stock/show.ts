@@ -6,11 +6,10 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/stock/:date',
+	'/api/stock',
 	requireAuth,
-	async (req: Request<{ date: string }>, res: Response) => {
-		const { date } = req.params;
-		const stock = await Stock.findAll({ where: { date } });
+	async (req: Request<{ }>, res: Response) => {
+		const stock = await Stock.findAll();
 		if (!stock) {
 			return res.send('not entries found');
 		}
