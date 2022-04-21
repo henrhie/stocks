@@ -16,11 +16,11 @@ const router = express.Router();
 // };
 
 interface ReqBody {
-	stockName: string;
+	issue_name: string;
 	date: string;
-	serialNumber: string;
-	issuedBy: string;
-	issuedTo: string;
+	issuedby: string;
+	issuedto: string;
+	items_issued: number
 	user: string;
 }
 
@@ -28,14 +28,18 @@ router.post(
 	'/api/issued',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
+		const { issue_name, issuedby, issuedto, items_issued } = req.body
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
 		Issued.create({
-			...req.body,
 			date: req.body.date ? req.body.date : date,
 			user: req.body.user,
+			stockName: issue_name,
+			issuedBy: issuedby,
+			issuedTo: issuedto,
+			total: items_issued
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);

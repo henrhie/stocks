@@ -8,9 +8,9 @@ const router = express.Router();
 
 interface ReqBody {
 	stockName: string;
-	serialNumber: string;
 	receivedBy: string;
 	date: string;
+	totalNumber: number
 	totalReceived: number;
 	user: string
 }

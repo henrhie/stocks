@@ -8,7 +8,8 @@ const router = express.Router();
 
 interface ReqBody {
 	stockName: string;
-	totalAvailableNumber: number; 
+	numberReceived: number;
+	numberIssued: number;
 	date: string;
 	user: string;
 }
@@ -25,6 +26,7 @@ router.post(
 		Stock.create({
 			...req.body,
 			date: req.body.date ? req.body.date : date,
+			totalAvailableNumber: req.body.numberReceived - req.body.numberIssued
 		})
 			.then(async (stock) => {
 				addToCsv(stock);

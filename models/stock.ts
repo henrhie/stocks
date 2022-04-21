@@ -10,8 +10,9 @@ class Stock extends Model<
 > {
 	declare id: CreationOptional<number>;
 	declare stockName: string;
-	declare serialNumber: string;
 	declare totalAvailableNumber: number; 
+	declare numberIssued: number;
+	declare numberReceived: number;
 	declare date: string;
 	declare user: string;
 }

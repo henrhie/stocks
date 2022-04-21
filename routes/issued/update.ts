@@ -15,43 +15,47 @@ const router = express.Router();
 // };
 
 interface ReqBody {
-	stockName: string;
-	serialNumber: string;
-	issuedBy: string;
-	issuedTo: string;
+	issue_name: string;
+	date: string;
+	issuedby: string;
+	issuedto: string;
 	user: string;
+	items_issued: number
 }
 
 router.put(
-	'/api/equipment/:name',
+	'/api/issued/:name',
 	requireAuth,
 	async (
-		req: Request<{ serial: string }, {}, ReqBody>,
+		req: Request<{ name: string }, {}, ReqBody>,
 		res: Response
 	) => {
-		const { serial } = req.params;
+		const { name } = req.params;
 		const issued = await Issued.findOne({
-			where: { serialNumber: serial },
+			where: { stockName: name },
 		});
 		if (!issued) {
 			throw new Error('equipment does not exist');
 		}
 
 		const {
-			stockName,
-			serialNumber,
-			issuedBy,
-			issuedTo,
+			issue_name,
+			issuedby,
+			issuedto,
+			date,
 			user,
+			items_issued
 		} = req.body;
+
+		console.log('reqbody: ', req.body)
 
 
 		issued.set({
-			stockName,
-			serialNumber,
-			issuedBy,
-			issuedTo,
-			user
+			stockName: issue_name,
+			issuedBy: issuedby,
+			issuedTo: issuedto,
+			user,
+			total: items_issued
 		});
 
 		await issued.save();

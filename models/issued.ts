@@ -11,9 +11,9 @@ class Issued extends Model<
 	declare id: CreationOptional<number>;
 	declare stockName: string;
 	declare date: string;
-	declare serialNumber: string;
 	declare issuedBy: string;
 	declare issuedTo: string;
+	declare total: number;
 	declare user: string;
 }
 

@@ -6,25 +6,28 @@ const router = express.Router();
 
 interface ReqBody {
 	stockName: string;
-	totalAvailableNumber: number; 
+	numberReceived: number;
+	numberIssued: number; 
 	date: string;
 }
 
 router.put(
-	'/api/stock/:serial',
+	'/api/stock/:name',
 	requireAuth,
-	async (req: Request<{ serial: string }, {}, ReqBody>, res: Response) => {
-		const { serial } = req.params;
-		const stock = await Stock.findOne({ where: { serialNumber: serial } });
+	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
+		const { name } = req.params;
+		const stock = await Stock.findOne({ where: { stockName: name } });
 		if (!stock) {
 			return res.send('entry does not exist');
 		}
 
-		const { stockName, totalAvailableNumber, } = req.body;
+		const { stockName, numberIssued, numberReceived } = req.body;
 
 		stock.set({
 			stockName,
-			totalAvailableNumber
+			totalAvailableNumber: numberReceived - numberIssued,
+			numberIssued,
+			numberReceived
 		});
 
 		await stock.save();

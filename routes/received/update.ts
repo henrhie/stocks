@@ -6,10 +6,9 @@ const router = express.Router();
 
 interface ReqBody {
 	stockName: string;
-	serialNumber: string;
 	receivedBy: string;
 	date: string;
-	totalReceived: number;
+	totalNumber: number;
 	user: string
 }
 
@@ -30,12 +29,10 @@ router.put(
 			return res.status(401).send('received does not exist');
 		}
 
-		const { stockName, serialNumber, receivedBy, totalReceived } = req.body;
+		// const { stockName, receivedBy, totalNumber } = req.body;
 
 		received_.set({
-			stockName: stockName ? stockName : received_.stockName,
-			serialNumber: serialNumber ? serialNumber : received_.serialNumber,
-			receivedBy: receivedBy ? receivedBy : received_.receivedBy,
+			...req.body
 		});
 
 		await received_.save();

@@ -8,7 +8,7 @@ import { User } from './user';
 import { Received } from './received';
 import { Password } from '../services/password';
 
-const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME} = process.env
+const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env
 
 const createInstance = async () => {
 	const sequelize = new Sequelize({
@@ -17,7 +17,6 @@ const createInstance = async () => {
 		host: HOST,
 		username: USER,
 		password: PASSWORD,
-		dialectModulePath: 'tedious',
 		dialectOptions: {
 			options: {
 				instanceName: INSTANCE_NAME,
@@ -70,20 +69,20 @@ let sequelizeInstance: Sequelize;
 			issuedTo: {
 				type: DataTypes.STRING,
 			},
-			serialNumber: {
-				type: DataTypes.STRING,
-			},
 			date: {
 				type: DataTypes.STRING,
 			},
 			user: {
 				type: DataTypes.STRING,
 			},
+			total: {
+				type: DataTypes.INTEGER
+			}
 		},
 		{
 			sequelize: sequelizeInstance,
 			modelName: 'Issued',
-		}
+		},
 	);
 	Date_.init(
 		{
@@ -114,9 +113,6 @@ let sequelizeInstance: Sequelize;
 			date: {
 				type: DataTypes.STRING,
 			},
-			serialNumber: {
-				type: DataTypes.STRING,
-			},
 			receivedBy: {
 				type: DataTypes.STRING,
 			},
@@ -124,6 +120,7 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
+			totalNumber: DataTypes.INTEGER,
 		},
 		{
 			modelName: 'Received',
@@ -149,13 +146,12 @@ let sequelizeInstance: Sequelize;
 			user: {
 				type: DataTypes.STRING,
 			},
-			serialNumber: {
-				type: DataTypes.STRING,
-			}
+			numberIssued: DataTypes.INTEGER,
+			numberReceived: DataTypes.INTEGER
 		},
 		{
 			sequelize: sequelizeInstance,
-			modelName: 'PowerUsage',
+			modelName: 'Stocks',
 		}
 	);
 	User.init(

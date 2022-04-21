@@ -5,15 +5,16 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/equipment/:serial',
+	'/api/issued/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { serial } = req.params;
+		const { name } = req.params;
 
 		const issuedNumber = await Issued.destroy({
-			where: { serialNumber: serial },
+			where: { stockName: name },
 		});
-		res.send({ deleteNumber: issuedNumber });
+		const remainingIssues = await Issued.findAll()
+		res.send({ issued: remainingIssues });
 	}
 );
 

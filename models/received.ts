@@ -10,10 +10,10 @@ class Received extends Model<
 > {
 	declare id: CreationOptional<number>;
 	declare stockName: string;
-	declare serialNumber: string;
 	declare receivedBy: string;
 	declare date: string;
 	declare user: string
+	declare totalNumber: number
 }
 
 export { Received };

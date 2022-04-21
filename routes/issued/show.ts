@@ -6,12 +6,12 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/issued/:serial',
+	'/api/issued/:name',
 	requireAuth,
-	async (req: Request<{ serial: string }>, res: Response) => {
-		const { serial } = req.params;
+	async (req: Request<{ name: string }>, res: Response) => {
+		const { name } = req.params;
 		const issued = await Issued.findOne({
-			where: { serialNumber: serial },
+			where: { stockName: name },
 		});
 		console.log(issued);
 		if (!issued) {

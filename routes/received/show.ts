@@ -8,11 +8,11 @@ const router = express.Router();
 router.get(
 	'/api/received/:serial',
 	requireAuth,
-	async (req: Request<{ serial: string }>, res: Response) => {
-		const { serial } = req.params;
+	async (req: Request<{ name: string }>, res: Response) => {
+		const { name } = req.params;
 		const received_ = await Received.findOne({
 			where: {
-				serialNumber: serial
+				stockName: name
 			},
 		});
 		if (!received_) {
