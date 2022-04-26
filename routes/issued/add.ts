@@ -6,15 +6,6 @@ import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
 
-// const equipmentToKVA: any = {
-// 	'AVR 1 (250 kVA)': 250.0,
-// 	'AVR 2 (250 kVA)': 250.0,
-// 	'UPS A (120 kVA)': 120.0,
-// 	'UPS B (120 kVA)': 120.0,
-// 	'Genset A (400 kVA)': 400.0,
-// 	'Genset B (400 kVA)': 400.0,
-// };
-
 interface ReqBody {
 	issue_name: string;
 	date: string;

@@ -5,7 +5,7 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/autonomy/:name',
+	'/api/received/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const { name } = req.params;
@@ -15,7 +15,7 @@ router.delete(
 			},
 		});
 		const receivedItems = await Received.findAll();
-		return res.send(receivedItems);
+		return res.send({received: receivedItems});
 	}
 );
 

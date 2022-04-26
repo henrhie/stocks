@@ -7,11 +7,11 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	stockName: string;
-	receivedBy: string;
+	received_name: string;
+	receivedby: string;
 	date: string;
-	totalNumber: number
-	totalReceived: number;
+	vendor: string;
+	items_received: number
 	user: string
 }
 
@@ -25,9 +25,14 @@ router.post(
 			.replace('/', '-');
 
 		console.log('req.body ===> ', req.body);
+		const {received_name, receivedby, vendor, items_received, user} = req.body
 		Received.create({
-			...req.body,
-			date: req.body.date ? req.body.date : date,
+			stockName: received_name,
+			receivedBy: receivedby,
+			vendor,
+			totalNumber: items_received,
+			user,
+			date: req.body.date ? req.body.date: date
 		})
 			.then(async (received) => {
 				addToCsv(received);

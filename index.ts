@@ -22,10 +22,6 @@ import { showStockRouter } from './routes/stock/show';
 import { updateStockRouter } from './routes/stock/update';
 
 
-import { addRemarkRouter } from './routes/remarks/add';
-import { showRemarksRouter } from './routes/remarks/show';
-
-
 import { csvRouter } from './routes/issued/csv';
 
 import { SigninRouter } from './routes/auth/signin';
@@ -44,8 +40,6 @@ app.use(cors());
 app.use(express.json());
 app.use(validateUser);
 
-app.use(addRemarkRouter);
-app.use(showRemarksRouter);
 
 app.use(addIssuedRouter);
 app.use(updateIssuedRouter);

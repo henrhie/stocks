@@ -28,13 +28,7 @@ router.get(
 		if (!issued) {
 			throw new Error('could not find issued');
 		}
-		const _dates_ = await _Date.findAll();
-		let _dates = _dates_.map((date) => date.date_artifact);
-		_dates = [...new Set(_dates)];
-		if (!_dates) {
-			throw new Error('not date entries');
-		}
-		return res.send({ issued, dates: _dates });
+		return res.send({ issued });
 	}
 );
 

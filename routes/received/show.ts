@@ -6,7 +6,7 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/received/:serial',
+	'/api/received/:name',
 	requireAuth,
 	async (req: Request<{ name: string }>, res: Response) => {
 		const { name } = req.params;

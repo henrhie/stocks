@@ -5,34 +5,40 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	stockName: string;
-	receivedBy: string;
+	received_name: string;
+	receivedby: string;
 	date: string;
-	totalNumber: number;
+	vendor: string;
+	items_received: number
 	user: string
 }
 
 router.put(
-	'/api/received/:serial',
+	'/api/received/:name',
 	requireAuth,
 	async (
-		req: Request<{ serial: string }, {}, ReqBody>,
+		req: Request<{ name: string }, {}, ReqBody>,
 		res: Response
 	) => {
-		const { serial } = req.params;
+		const { name } = req.params;
 		const received_ = await Received.findOne({
 			where: {
-				stockName: serial,
+				stockName: name,
 			},
 		});
 		if (!received_) {
 			return res.status(401).send('received does not exist');
 		}
 
-		// const { stockName, receivedBy, totalNumber } = req.body;
+		const { received_name, receivedby, vendor, items_received, user, date } = req.body;
 
 		received_.set({
-			...req.body
+			stockName: received_name,
+			receivedBy: receivedby,
+			vendor,
+			totalNumber: items_received,
+			user,
+			date
 		});
 
 		await received_.save();

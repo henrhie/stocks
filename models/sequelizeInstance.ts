@@ -121,6 +121,7 @@ let sequelizeInstance: Sequelize;
 				allowNull: false,
 			},
 			totalNumber: DataTypes.INTEGER,
+			vendor: DataTypes.STRING
 		},
 		{
 			modelName: 'Received',
@@ -183,7 +184,7 @@ let sequelizeInstance: Sequelize;
 	await User.sync();
 	await Issued.sync();
 	await Remarks.sync();
-	await Received.sync();
+	await Received.sync({ force: true});
 	await Date_.sync();
 	await Stock.sync();
 
