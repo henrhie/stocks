@@ -147,8 +147,9 @@ let sequelizeInstance: Sequelize;
 			user: {
 				type: DataTypes.STRING,
 			},
-			numberIssued: DataTypes.INTEGER,
-			numberReceived: DataTypes.INTEGER
+			serial: {
+				type: DataTypes.STRING
+			}
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -184,9 +185,9 @@ let sequelizeInstance: Sequelize;
 	await User.sync();
 	await Issued.sync();
 	await Remarks.sync();
-	await Received.sync({ force: true});
+	await Received.sync();
 	await Date_.sync();
-	await Stock.sync();
+	await Stock.sync({ force: true});
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

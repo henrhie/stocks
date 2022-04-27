@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Received } from '../../models/received';
-import { Date as _Date } from '../../models/date';
+import { Stock } from '../../models/stock'
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
 
@@ -36,9 +36,22 @@ router.post(
 		})
 			.then(async (received) => {
 				addToCsv(received);
-				await _Date.create({
-					date_artifact: req.body.date ? req.body.date : date,
-				});
+				const availableStock = await Stock.findOne({ where: { stockName: received_name }})
+				if(!availableStock) {
+					await Stock.create({
+						stockName: received_name,
+						date: req.body.date ? req.body.date: date,
+						user,
+						serial: '',
+						totalAvailableNumber: items_received
+					})
+				}
+				else {
+					availableStock.set({
+						...availableStock,
+						totalAvailableNumber: availableStock.totalAvailableNumber + items_received
+					})
+				}
 				return res.status(201).send(received);
 			})
 			.catch((err) => {

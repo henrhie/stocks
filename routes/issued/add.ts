@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Issued } from '../../models/issued';
+import { Stock } from '../../models/stock'
 import { Date as _Date } from '../../models/date';
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
@@ -34,9 +35,22 @@ router.post(
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);
-				await _Date.create({
-					date_artifact: req.body.date ? req.body.date : date,
-				});
+				const availableStock = await Stock.findOne({ where: { stockName: issue_name }})
+				if(!availableStock) {
+					await Stock.create({
+						stockName: issue_name,
+						date: req.body.date ? req.body.date: date,
+						user: req.body.user,
+						serial: '',
+						totalAvailableNumber: -items_issued
+					})
+				}
+				else {
+					availableStock.set({
+						...availableStock,
+						totalAvailableNumber: availableStock.totalAvailableNumber - items_issued
+					})
+				}
 				return res.status(201).send(equipment);
 			})
 			.catch((err) => {

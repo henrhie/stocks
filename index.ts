@@ -16,8 +16,8 @@ import { showReceivedRouter } from './routes/received/show';
 import { updateReceivedRouter } from './routes/received/update';
 
 
-import { addStockRouter } from './routes/stock/add';
-import { deleteStockRouter } from './routes/stock/delete';
+// import { addStockRouter } from './routes/stock/add';
+// import { deleteStockRouter } from './routes/stock/delete';
 import { showStockRouter } from './routes/stock/show';
 import { updateStockRouter } from './routes/stock/update';
 
@@ -55,8 +55,8 @@ app.use(SignupRouter);
 app.use(SignoutRouter);
 app.use(SigninRouter);
 
-app.use(addStockRouter);
-app.use(deleteStockRouter);
+// app.use(addStockRouter);
+// app.use(deleteStockRouter);
 app.use(showStockRouter);
 app.use(csvRouter);
 app.use(updateStockRouter);

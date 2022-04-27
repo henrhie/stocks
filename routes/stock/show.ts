@@ -10,9 +10,6 @@ router.get(
 	requireAuth,
 	async (req: Request<{ }>, res: Response) => {
 		const stock = await Stock.findAll();
-		if (!stock) {
-			return res.send('not entries found');
-		}
 		return res.send(stock);
 	}
 );
