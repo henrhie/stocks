@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Received } from '../../models/received';
+import { Stock } from '../../models/stock';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -31,6 +32,17 @@ router.put(
 		}
 
 		const { received_name, receivedby, vendor, items_received, user, date } = req.body;
+
+		const availableStock = await Stock.findOne({ where: { stockName: received_name }})
+		availableStock?.set({
+			stockName: received_name,
+			date,
+			user,
+			serial: '',
+			totalAvailableNumber: (availableStock.totalAvailableNumber - received_.totalNumber) + items_received
+		})
+
+		await availableStock?.save()
 
 		received_.set({
 			stockName: received_name,

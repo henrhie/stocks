@@ -32,6 +32,10 @@ import { validateUser } from './routes/auth/validate-user';
 
 
 import './models/sequelizeInstance';
+import { updateUserRouter } from './routes/auth/update-user';
+import { deleteUserRouter } from './routes/auth/delete-user';
+import { showUserRouter } from './routes/auth/show';
+import { addUserRouter } from './routes/auth/add';
 
 const app = express();
 
@@ -54,6 +58,10 @@ app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SignoutRouter);
 app.use(SigninRouter);
+app.use(updateUserRouter)
+app.use(deleteUserRouter)
+app.use(showUserRouter)
+app.use(addUserRouter)
 
 // app.use(addStockRouter);
 // app.use(deleteStockRouter);

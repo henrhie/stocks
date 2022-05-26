@@ -26,8 +26,6 @@ router.put(
 		stock.set({
 			stockName,
 			totalAvailableNumber: numberReceived - numberIssued,
-			numberIssued,
-			numberReceived
 		});
 
 		await stock.save();

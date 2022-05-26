@@ -36,6 +36,7 @@ router.post(
 			.then(async (equipment) => {
 				addToCsv(equipment);
 				const availableStock = await Stock.findOne({ where: { stockName: issue_name }})
+				console.log('stock: ', availableStock)
 				if(!availableStock) {
 					await Stock.create({
 						stockName: issue_name,
@@ -46,10 +47,12 @@ router.post(
 					})
 				}
 				else {
+					
 					availableStock.set({
 						...availableStock,
 						totalAvailableNumber: availableStock.totalAvailableNumber - items_issued
 					})
+					await availableStock.save()
 				}
 				return res.status(201).send(equipment);
 			})

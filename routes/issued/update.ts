@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Issued } from '../../models/issued';
+import { Stock } from '../../models/stock';
 import { User } from '../../models/user';
 import { requireAuth } from '../auth/require-auth';
 
@@ -39,9 +40,16 @@ router.put(
 			items_issued
 		} = req.body;
 
-		console.log('reqbody: ', req.body)
+		const availableStock = await Stock.findOne({ where: { stockName: issue_name }})
+		availableStock?.set({
+			stockName: issue_name,
+			date,
+			user,
+			serial: '',
+			totalAvailableNumber: (availableStock.totalAvailableNumber + issued.total) - items_issued
+		})
 
-
+		await availableStock?.save()
 		issued.set({
 			stockName: issue_name,
 			issuedBy: issuedby,

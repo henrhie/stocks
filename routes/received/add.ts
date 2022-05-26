@@ -49,8 +49,9 @@ router.post(
 				else {
 					availableStock.set({
 						...availableStock,
-						totalAvailableNumber: availableStock.totalAvailableNumber + items_received
+						totalAvailableNumber: +availableStock.totalAvailableNumber + +items_received
 					})
+					await availableStock.save()
 				}
 				return res.status(201).send(received);
 			})
