@@ -7,6 +7,7 @@ import { Stock } from './stock';
 import { User } from './user';
 import { Received } from './received';
 import { Password } from '../services/password';
+import { Vendor } from './vendor';
 
 const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env
 
@@ -77,6 +78,9 @@ let sequelizeInstance: Sequelize;
 			},
 			total: {
 				type: DataTypes.INTEGER
+			},
+			category:  {
+				type: DataTypes.STRING
 			}
 		},
 		{
@@ -121,7 +125,8 @@ let sequelizeInstance: Sequelize;
 				allowNull: false,
 			},
 			totalNumber: DataTypes.INTEGER,
-			vendor: DataTypes.STRING
+			vendor: DataTypes.STRING,
+			category: DataTypes.STRING
 		},
 		{
 			modelName: 'Received',
@@ -156,6 +161,18 @@ let sequelizeInstance: Sequelize;
 			modelName: 'Stocks',
 		}
 	);
+	Vendor.init({
+		id: {
+				type: DataTypes.INTEGER,
+				autoIncrement: true,
+				primaryKey: true,
+			},
+		name: DataTypes.STRING
+	},
+	{
+		sequelize: sequelizeInstance,
+		modelName: 'Stocks',
+	}),
 	User.init(
 		{
 			id: {
@@ -183,11 +200,12 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await Issued.sync();
+	await Issued.sync({ force: true });
 	await Remarks.sync();
-	await Received.sync();
+	await Received.sync({ force: true });
 	await Date_.sync();
 	await Stock.sync({ force: true});
+	await Vendor.sync()
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

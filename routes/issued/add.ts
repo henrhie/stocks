@@ -14,13 +14,14 @@ interface ReqBody {
 	issuedto: string;
 	items_issued: number
 	user: string;
+	category: string
 }
 
 router.post(
 	'/api/issued',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { issue_name, issuedby, issuedto, items_issued } = req.body
+		const { issue_name, category, issuedby, issuedto, items_issued } = req.body
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
@@ -31,7 +32,8 @@ router.post(
 			stockName: issue_name,
 			issuedBy: issuedby,
 			issuedTo: issuedto,
-			total: items_issued
+			total: items_issued,
+			category
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);

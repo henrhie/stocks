@@ -11,8 +11,9 @@ interface ReqBody {
 	receivedby: string;
 	date: string;
 	vendor: string;
-	items_received: number
-	user: string
+	items_received: number;
+	user: string;
+	category: string
 }
 
 router.post(
@@ -25,14 +26,15 @@ router.post(
 			.replace('/', '-');
 
 		console.log('req.body ===> ', req.body);
-		const {received_name, receivedby, vendor, items_received, user} = req.body
+		const {received_name, category, receivedby, vendor, items_received, user} = req.body
 		Received.create({
 			stockName: received_name,
 			receivedBy: receivedby,
 			vendor,
 			totalNumber: items_received,
 			user,
-			date: req.body.date ? req.body.date: date
+			date: req.body.date ? req.body.date: date,
+			category
 		})
 			.then(async (received) => {
 				addToCsv(received);

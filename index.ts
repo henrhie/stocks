@@ -36,6 +36,9 @@ import { updateUserRouter } from './routes/auth/update-user';
 import { deleteUserRouter } from './routes/auth/delete-user';
 import { showUserRouter } from './routes/auth/show';
 import { addUserRouter } from './routes/auth/add';
+import { addVendorRouter } from './routes/vendor/add';
+import { showVendorsRouter } from './routes/vendor/show';
+import { deleteVendorRouter } from './routes/vendor/delete';
 
 const app = express();
 
@@ -62,6 +65,10 @@ app.use(updateUserRouter)
 app.use(deleteUserRouter)
 app.use(showUserRouter)
 app.use(addUserRouter)
+
+app.use(addVendorRouter)
+app.use(showVendorsRouter)
+app.use(deleteVendorRouter)
 
 // app.use(addStockRouter);
 // app.use(deleteStockRouter);

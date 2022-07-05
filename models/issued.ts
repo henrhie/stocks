@@ -15,6 +15,7 @@ class Issued extends Model<
 	declare issuedTo: string;
 	declare total: number;
 	declare user: string;
+	declare category: string;
 }
 
 export { Issued };

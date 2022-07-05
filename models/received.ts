@@ -14,7 +14,8 @@ class Received extends Model<
 	declare date: string;
 	declare user: string;
 	declare totalNumber: number;
-	declare vendor: string
+	declare vendor: string;
+	declare category: string;
 }
 
 export { Received };
