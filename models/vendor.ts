@@ -10,6 +10,10 @@ class Vendor extends Model<
 > {
 	declare id: CreationOptional<number>;
 	declare name: string;
+	declare products: string;
+	declare email: string;
+	declare contact: string;
+	declare user: string;
 }
 
 export { Vendor };

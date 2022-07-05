@@ -5,16 +5,19 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	name: string
+	name: string,
+	contact: string,
+	email: string,
+	products: string,
+	user: string
 }
 
 router.post(
-	'/api/vendor',
+	'/api/vendors',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { name } = req.body
 		Vendor.create({
-			name
+			...req.body
 		})
 			.then(async (vendor) => {
 				const vendors = await Vendor.findAll()

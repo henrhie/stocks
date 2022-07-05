@@ -5,7 +5,7 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/vendor',
+	'/api/vendors',
 	requireAuth,
 	async (req: Request, res: Response) => {
 		const vendors = await Vendor.findAll();

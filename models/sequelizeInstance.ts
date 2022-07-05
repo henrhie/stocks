@@ -167,7 +167,11 @@ let sequelizeInstance: Sequelize;
 				autoIncrement: true,
 				primaryKey: true,
 			},
-		name: DataTypes.STRING
+		name: DataTypes.STRING,
+		products: DataTypes.STRING,
+		email: DataTypes.STRING,
+		contact: DataTypes.STRING,
+		user: DataTypes.STRING
 	},
 	{
 		sequelize: sequelizeInstance,
@@ -200,12 +204,12 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await Issued.sync({ force: true });
+	await Issued.sync({ alter: true });
 	await Remarks.sync();
-	await Received.sync({ force: true });
+	await Received.sync({ alter: true });
 	await Date_.sync();
-	await Stock.sync({ force: true});
-	await Vendor.sync()
+	await Stock.sync({ alter: true});
+	await Vendor.sync({ alter: true})
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

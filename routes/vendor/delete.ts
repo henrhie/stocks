@@ -7,12 +7,13 @@ const router = express.Router();
 
 
 router.delete(
-	'/api/vendor/:name',
+	'/api/vendors/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
     const { name } = req.params
-		const vendors = await Vendor.destroy({ where: { name }});
-    return res.send(vendors)
+		await Vendor.destroy({ where: { name }});
+		const vendors = await Vendor.findAll()
+    res.send(vendors)
 	}
 );
 export { router as deleteVendorRouter };
