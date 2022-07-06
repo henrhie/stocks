@@ -7,7 +7,7 @@ import { Stock } from './stock';
 import { User } from './user';
 import { Received } from './received';
 import { Password } from '../services/password';
-import { Vendor } from './vendor';
+import { Vendor } from './vendor'; //
 
 const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env
 
@@ -81,7 +81,8 @@ let sequelizeInstance: Sequelize;
 			},
 			category:  {
 				type: DataTypes.STRING
-			}
+			},
+			serial: DataTypes.STRING
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -120,13 +121,11 @@ let sequelizeInstance: Sequelize;
 			receivedBy: {
 				type: DataTypes.STRING,
 			},
-			user: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
+			user: DataTypes.STRING,
 			totalNumber: DataTypes.INTEGER,
 			vendor: DataTypes.STRING,
-			category: DataTypes.STRING
+			category: DataTypes.STRING,
+			serial: DataTypes.STRING
 		},
 		{
 			modelName: 'Received',
@@ -154,7 +153,8 @@ let sequelizeInstance: Sequelize;
 			},
 			serial: {
 				type: DataTypes.STRING
-			}
+			},
+			category: DataTypes.STRING
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -175,7 +175,7 @@ let sequelizeInstance: Sequelize;
 	},
 	{
 		sequelize: sequelizeInstance,
-		modelName: 'Stocks',
+		modelName: 'Vendors',
 	}),
 	User.init(
 		{
@@ -204,12 +204,10 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await Issued.sync({ alter: true });
-	await Remarks.sync();
-	await Received.sync({ alter: true });
-	await Date_.sync();
-	await Stock.sync({ alter: true});
-	await Vendor.sync({ alter: true})
+	await Issued.sync({ force: true });
+	await Received.sync({ force: true });
+	await Stock.sync({ force: true});
+	await Vendor.sync({ force: true })
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

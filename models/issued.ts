@@ -16,6 +16,7 @@ class Issued extends Model<
 	declare total: number;
 	declare user: string;
 	declare category: string;
+	declare serial: string;
 }
 
 export { Issued };

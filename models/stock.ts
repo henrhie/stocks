@@ -14,6 +14,7 @@ class Stock extends Model<
 	declare date: string;
 	declare user: string;
 	declare serial: string;
+	declare category: string;
 }
 
 export { Stock };

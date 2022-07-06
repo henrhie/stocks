@@ -16,6 +16,7 @@ router.post(
 	'/api/vendors',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
+		console.log(req.body)
 		Vendor.create({
 			...req.body
 		})

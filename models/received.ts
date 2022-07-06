@@ -16,6 +16,7 @@ class Received extends Model<
 	declare totalNumber: number;
 	declare vendor: string;
 	declare category: string;
+	declare serial: string;
 }
 
 export { Received };

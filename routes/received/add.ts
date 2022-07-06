@@ -13,7 +13,8 @@ interface ReqBody {
 	vendor: string;
 	items_received: number;
 	user: string;
-	category: string
+	category: string,
+	serial: string
 }
 
 router.post(
@@ -26,7 +27,7 @@ router.post(
 			.replace('/', '-');
 
 		console.log('req.body ===> ', req.body);
-		const {received_name, category, receivedby, vendor, items_received, user} = req.body
+		const { received_name, category, receivedby, vendor, items_received, user, serial } = req.body
 		Received.create({
 			stockName: received_name,
 			receivedBy: receivedby,
@@ -34,7 +35,8 @@ router.post(
 			totalNumber: items_received,
 			user,
 			date: req.body.date ? req.body.date: date,
-			category
+			category,
+			serial
 		})
 			.then(async (received) => {
 				addToCsv(received);
@@ -44,8 +46,9 @@ router.post(
 						stockName: received_name,
 						date: req.body.date ? req.body.date: date,
 						user,
-						serial: '',
-						totalAvailableNumber: items_received
+						serial,
+						totalAvailableNumber: items_received,
+						category
 					})
 				}
 				else {

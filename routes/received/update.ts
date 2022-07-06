@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { Issued } from '../../models/issued';
 import { Received } from '../../models/received';
 import { Stock } from '../../models/stock';
 import { requireAuth } from '../auth/require-auth';
@@ -10,8 +11,9 @@ interface ReqBody {
 	receivedby: string;
 	date: string;
 	vendor: string;
-	items_received: number
-	user: string
+	items_received: number;
+	user: string;
+	serial: string;
 }
 
 router.put(
@@ -22,24 +24,32 @@ router.put(
 		res: Response
 	) => {
 		const { name } = req.params;
+		const issued_ = await Issued.findOne({
+			where: {
+				stockName: name,
+			},
+		});
 		const received_ = await Received.findOne({
 			where: {
 				stockName: name,
 			},
 		});
-		if (!received_) {
-			return res.status(401).send('received does not exist');
+		if (!issued_ || !received_) {
+			return res.status(401).send('item does not exist');
 		}
 
-		const { received_name, receivedby, vendor, items_received, user, date } = req.body;
+		const { received_name, receivedby, vendor, items_received, user, date, serial } = req.body;
 
 		const availableStock = await Stock.findOne({ where: { stockName: received_name }})
+		const newTotal = items_received - issued_.total
+		console.log('new total: ', newTotal);
+		console.log('items received: ', items_received)
 		availableStock?.set({
 			stockName: received_name,
 			date,
 			user,
-			serial: '',
-			totalAvailableNumber: (availableStock.totalAvailableNumber - received_.totalNumber) + items_received
+			serial,
+			totalAvailableNumber: newTotal || availableStock.totalAvailableNumber
 		})
 
 		await availableStock?.save()
