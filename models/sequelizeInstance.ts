@@ -7,7 +7,7 @@ import { Stock } from './stock';
 import { User } from './user';
 import { Received } from './received';
 import { Password } from '../services/password';
-import { Vendor } from './vendor'; //
+import { Vendor } from './vendor';
 
 const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env
 
