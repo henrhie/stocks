@@ -24,6 +24,7 @@ router.put(
 		res: Response
 	) => {
 		const { name } = req.params;
+		console.log('name: ', name)
 		const issued_ = await Issued.findOne({
 			where: {
 				stockName: name,
@@ -34,14 +35,15 @@ router.put(
 				stockName: name,
 			},
 		});
-		if (!issued_ || !received_) {
+		if (!issued_ && !received_) {
 			return res.status(401).send('item does not exist');
 		}
 
 		const { received_name, receivedby, vendor, items_received, user, date, serial } = req.body;
 
 		const availableStock = await Stock.findOne({ where: { stockName: received_name }})
-		const newTotal = items_received - issued_.total
+
+		const newTotal = items_received - (issued_ ? issued_.total : 0);
 		console.log('new total: ', newTotal);
 		console.log('items received: ', items_received)
 		availableStock?.set({
@@ -54,7 +56,7 @@ router.put(
 
 		await availableStock?.save()
 
-		received_.set({
+		received_?.set({
 			stockName: received_name,
 			receivedBy: receivedby,
 			vendor,
@@ -63,7 +65,7 @@ router.put(
 			date
 		});
 
-		await received_.save();
+		await received_?.save();
 		return res.send(received_);
 	}
 );
