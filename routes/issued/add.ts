@@ -8,7 +8,9 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	issue_name: string;
+	model_name: string;
+	service_tag: string;
+	department: string;
 	date: string;
 	issuedby: string;
 	issuedto: string;
@@ -22,7 +24,7 @@ router.post(
 	'/api/issued',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { issue_name, category, issuedby, issuedto, items_issued, serial } = req.body
+		const { model_name,service_tag, department, category, issuedby, issuedto, items_issued, serial } = req.body
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
@@ -30,25 +32,27 @@ router.post(
 		Issued.create({
 			date: req.body.date ? req.body.date : date,
 			user: req.body.user,
-			stockName: issue_name,
+			stockName: model_name,
 			issuedBy: issuedby,
 			issuedTo: issuedto,
 			total: items_issued,
 			category,
-			serial
+			serial,
+			service_tag,
+			department
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);
-				const availableStock = await Stock.findOne({ where: { stockName: issue_name }})
+				const availableStock = await Stock.findOne({ where: { stockName: model_name }})
 				console.log('stock: ', availableStock)
 				if(!availableStock) {
 					await Stock.create({
-						stockName: issue_name,
+						stockName: model_name,
 						date: req.body.date ? req.body.date: date,
 						user: req.body.user,
 						serial,
 						totalAvailableNumber: -items_issued,
-						category
+						category,
 					})
 				}
 				else {

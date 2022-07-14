@@ -8,12 +8,16 @@ const router = express.Router();
 
 
 interface ReqBody {
-	issue_name: string;
+	model_name: string;
+	service_tag: string;
+	department: string;
 	date: string;
 	issuedby: string;
 	issuedto: string;
-	user: string;
 	items_issued: number
+	user: string;
+	category: string;
+	serial: string;
 }
 
 router.put(
@@ -32,29 +36,39 @@ router.put(
 		}
 
 		const {
-			issue_name,
+			model_name,
 			issuedby,
 			issuedto,
 			date,
 			user,
-			items_issued
+			department,
+			service_tag,
+			items_issued,
+			category,
+			serial
 		} = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: issue_name }})
+		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
 		availableStock?.set({
-			stockName: issue_name,
+			stockName: model_name,
 			date,
 			user,
 			serial: '',
+			category,
 			totalAvailableNumber: (availableStock.totalAvailableNumber + issued.total) - items_issued
 		})
 
 		await availableStock?.save()
 		issued.set({
-			stockName: issue_name,
+			stockName: model_name,
 			issuedBy: issuedby,
 			issuedTo: issuedto,
 			user,
+			serial,
+			category,
+			date,
+			service_tag,
+			department,
 			total: items_issued
 		});
 

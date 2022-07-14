@@ -7,13 +7,15 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	received_name: string;
+	model_name: string;
+	service_tag: string;
 	receivedby: string;
 	date: string;
 	vendor: string;
 	items_received: number;
 	user: string;
-	serial: string;
+	category: string,
+	serial: string
 }
 
 router.put(
@@ -39,15 +41,15 @@ router.put(
 			return res.status(401).send('item does not exist');
 		}
 
-		const { received_name, receivedby, vendor, items_received, user, date, serial } = req.body;
+		const { model_name, service_tag, category, receivedby, vendor, items_received, user, date, serial } = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: received_name }})
+		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
 
 		const newTotal = items_received - (issued_ ? issued_.total : 0);
 		console.log('new total: ', newTotal);
 		console.log('items received: ', items_received)
 		availableStock?.set({
-			stockName: received_name,
+			stockName: model_name,
 			date,
 			user,
 			serial,
@@ -57,7 +59,7 @@ router.put(
 		await availableStock?.save()
 
 		received_?.set({
-			stockName: received_name,
+			stockName: model_name,
 			receivedBy: receivedby,
 			vendor,
 			totalNumber: items_received,
