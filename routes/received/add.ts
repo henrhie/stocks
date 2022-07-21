@@ -32,7 +32,7 @@ router.post(
 		Received.create({
 			stockName: model_name,
 			receivedBy: receivedby,
-			// service_tag,
+			service_tag,
 			vendor,
 			totalNumber: items_received,
 			user,
