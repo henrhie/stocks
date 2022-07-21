@@ -193,7 +193,7 @@ let sequelizeInstance: Sequelize;
 				time: DataTypes.STRING,
 				activity: DataTypes.STRING,
 				number: {
-					type: DataTypes.NUMBER,
+					type: DataTypes.INTEGER,
 					allowNull: true,
 				},
 			},
