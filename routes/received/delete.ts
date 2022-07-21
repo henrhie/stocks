@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { Activity } from '../../models/activity';
 import { Received } from '../../models/received';
 import { requireAuth } from '../auth/require-auth';
 
@@ -15,7 +16,17 @@ router.delete(
 			},
 		});
 		const receivedItems = await Received.findAll();
-		return res.send({received: receivedItems});
+
+		const _date = new Date();
+		const date = _date.toLocaleDateString().replace('/', '-').replace('/', '-');
+		await Activity.create({
+			username: req.body.user,
+			date,
+			time: _date.toLocaleTimeString(),
+			activity: 'deleted item from received table',
+			item: name,
+		});
+		return res.send({ received: receivedItems });
 	}
 );
 

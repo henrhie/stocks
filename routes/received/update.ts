@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { Activity } from '../../models/activity';
 import { Issued } from '../../models/issued';
 import { Received } from '../../models/received';
 import { Stock } from '../../models/stock';
@@ -19,10 +20,7 @@ interface ReqBody {
 router.put(
 	'/api/received/:name',
 	requireAuth,
-	async (
-		req: Request<{ name: string }, {}, ReqBody>,
-		res: Response
-	) => {
+	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
 		const { name } = req.params;
 		const issued_ = await Issued.findOne({
 			where: {
@@ -38,21 +36,31 @@ router.put(
 			return res.status(401).send('item does not exist');
 		}
 
-		const { received_name, receivedby, vendor, items_received, user, date, serial } = req.body;
+		const {
+			received_name,
+			receivedby,
+			vendor,
+			items_received,
+			user,
+			date,
+			serial,
+		} = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: received_name }})
-		const newTotal = items_received - issued_.total
+		const availableStock = await Stock.findOne({
+			where: { stockName: received_name },
+		});
+		const newTotal = items_received - issued_.total;
 		console.log('new total: ', newTotal);
-		console.log('items received: ', items_received)
+		console.log('items received: ', items_received);
 		availableStock?.set({
 			stockName: received_name,
 			date,
 			user,
 			serial,
-			totalAvailableNumber: newTotal || availableStock.totalAvailableNumber
-		})
+			totalAvailableNumber: newTotal || availableStock.totalAvailableNumber,
+		});
 
-		await availableStock?.save()
+		await availableStock?.save();
 
 		received_.set({
 			stockName: received_name,
@@ -60,10 +68,25 @@ router.put(
 			vendor,
 			totalNumber: items_received,
 			user,
-			date
+			date,
 		});
 
 		await received_.save();
+
+		const _date = new Date();
+		const _date_ = _date
+			.toLocaleDateString()
+			.replace('/', '-')
+			.replace('/', '-');
+
+		await Activity.create({
+			username: req.body.user,
+			date: _date_,
+			time: _date.toLocaleTimeString(),
+			activity: 'updated item on received table',
+			item: name,
+			number: items_received,
+		});
 		return res.send(received_);
 	}
 );

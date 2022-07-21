@@ -9,18 +9,15 @@ import { updateIssuedRouter } from './routes/issued/update';
 import { deleteIssuedRouter } from './routes/issued/delete';
 import { showIssuedRouter } from './routes/issued/show';
 
-
 import { addReceivedRouter } from './routes/received/add';
 import { deleteReceivedRouter } from './routes/received/delete';
 import { showReceivedRouter } from './routes/received/show';
 import { updateReceivedRouter } from './routes/received/update';
 
-
 // import { addStockRouter } from './routes/stock/add';
 // import { deleteStockRouter } from './routes/stock/delete';
 import { showStockRouter } from './routes/stock/show';
 import { updateStockRouter } from './routes/stock/update';
-
 
 import { csvRouter } from './routes/issued/csv';
 
@@ -30,7 +27,6 @@ import { SignupRouter } from './routes/auth/signup';
 import { currentUserRouter } from './routes/auth/current-user';
 import { validateUser } from './routes/auth/validate-user';
 
-
 import './models/sequelizeInstance';
 import { updateUserRouter } from './routes/auth/update-user';
 import { deleteUserRouter } from './routes/auth/delete-user';
@@ -39,6 +35,7 @@ import { addUserRouter } from './routes/auth/add';
 import { addVendorRouter } from './routes/vendor/add';
 import { showVendorsRouter } from './routes/vendor/show';
 import { deleteVendorRouter } from './routes/vendor/delete';
+import { showActivitiesRouter } from './routes/activity/show';
 
 const app = express();
 
@@ -46,7 +43,6 @@ app.use(cors());
 
 app.use(express.json());
 app.use(validateUser);
-
 
 app.use(addIssuedRouter);
 app.use(updateIssuedRouter);
@@ -61,20 +57,22 @@ app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SignoutRouter);
 app.use(SigninRouter);
-app.use(updateUserRouter)
-app.use(deleteUserRouter)
-app.use(showUserRouter)
-app.use(addUserRouter)
+app.use(updateUserRouter);
+app.use(deleteUserRouter);
+app.use(showUserRouter);
+app.use(addUserRouter);
 
-app.use(addVendorRouter)
-app.use(showVendorsRouter)
-app.use(deleteVendorRouter)
+app.use(addVendorRouter);
+app.use(showVendorsRouter);
+app.use(deleteVendorRouter);
 
 // app.use(addStockRouter);
 // app.use(deleteStockRouter);
 app.use(showStockRouter);
 app.use(csvRouter);
 app.use(updateStockRouter);
+
+app.use(showActivitiesRouter);
 
 // app.use(express.static(path.join(__dirname, '_static')));
 // app.get('*', function (req, res) {
