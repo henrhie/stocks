@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
+import { Activity } from '../../models/activity';
 import { Issued } from '../../models/issued';
 import { Stock } from '../../models/stock';
 import { User } from '../../models/user';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
-
 
 interface ReqBody {
 	model_name: string;
@@ -23,10 +23,7 @@ interface ReqBody {
 router.put(
 	'/api/issued/:name',
 	requireAuth,
-	async (
-		req: Request<{ name: string }, {}, ReqBody>,
-		res: Response
-	) => {
+	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
 		const { name } = req.params;
 		const issued = await Issued.findOne({
 			where: { stockName: name },
@@ -57,8 +54,7 @@ router.put(
 			category,
 			totalAvailableNumber: (availableStock.totalAvailableNumber + issued.total) - items_issued
 		})
-
-		await availableStock?.save()
+		await availableStock?.save();
 		issued.set({
 			stockName: model_name,
 			issuedBy: issuedby,
@@ -70,6 +66,21 @@ router.put(
 			service_tag,
 			department,
 			total: items_issued
+		});
+
+		const _date = new Date();
+		const _date_ = _date
+			.toLocaleDateString()
+			.replace('/', '-')
+			.replace('/', '-');
+
+		await Activity.create({
+			username: req.body.user,
+			date: _date_,
+			time: _date.toLocaleTimeString(),
+			activity: 'updated item on issued table',
+			item: name,
+			number: items_issued,
 		});
 
 		await issued.save();

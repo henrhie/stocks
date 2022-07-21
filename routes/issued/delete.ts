@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { Activity } from '../../models/activity';
 import { Issued } from '../../models/issued';
 import { Received } from '../../models/received';
 import { Stock } from '../../models/stock';
@@ -23,7 +24,16 @@ router.delete(
 			const totalItem = await Stock.findOne({ where: { stockName: name }})
 			totalItem?.set({ ...totalItem, totalAvailableNumber: received.totalNumber})
 		}
-		const remainingIssues = await Issued.findAll()
+		const _date = new Date();
+		const date = _date.toLocaleDateString().replace('/', '-').replace('/', '-');
+		await Activity.create({
+			username: req.body.user,
+			date,
+			time: _date.toLocaleTimeString(),
+			activity: 'deleted item from issued table',
+			item: name,
+		});
+		const remainingIssues = await Issued.findAll();
 		res.send({ issued: remainingIssues });
 	}
 );

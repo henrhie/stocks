@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { Activity } from '../../models/activity';
 import { Issued } from '../../models/issued';
 import { Received } from '../../models/received';
 import { Stock } from '../../models/stock';
@@ -21,10 +22,7 @@ interface ReqBody {
 router.put(
 	'/api/received/:name',
 	requireAuth,
-	async (
-		req: Request<{ name: string }, {}, ReqBody>,
-		res: Response
-	) => {
+	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
 		const { name } = req.params;
 		console.log('name: ', name)
 		const issued_ = await Issued.findOne({
@@ -47,16 +45,16 @@ router.put(
 
 		const newTotal = items_received - (issued_ ? issued_.total : 0);
 		console.log('new total: ', newTotal);
-		console.log('items received: ', items_received)
+		console.log('items received: ', items_received);
 		availableStock?.set({
 			stockName: model_name,
 			date,
 			user,
 			serial,
-			totalAvailableNumber: newTotal || availableStock.totalAvailableNumber
-		})
+			totalAvailableNumber: newTotal || availableStock.totalAvailableNumber,
+		});
 
-		await availableStock?.save()
+		await availableStock?.save();
 
 		received_?.set({
 			stockName: model_name,
@@ -64,10 +62,24 @@ router.put(
 			vendor,
 			totalNumber: items_received,
 			user,
-			date
+			date,
 		});
-
+		
 		await received_?.save();
+		const _date = new Date();
+		const _date_ = _date
+			.toLocaleDateString()
+			.replace('/', '-')
+			.replace('/', '-');
+
+		await Activity.create({
+			username: req.body.user,
+			date: _date_,
+			time: _date.toLocaleTimeString(),
+			activity: 'updated item on received table',
+			item: name,
+			number: items_received,
+		});
 		return res.send(received_);
 	}
 );

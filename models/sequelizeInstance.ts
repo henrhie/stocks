@@ -8,8 +8,9 @@ import { User } from './user';
 import { Received } from './received';
 import { Password } from '../services/password';
 import { Vendor } from './vendor';
+import { Activity } from './activity';
 
-const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env
+const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env;
 
 const createInstance = async () => {
 	const sequelize = new Sequelize({
@@ -83,17 +84,17 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 			},
 			total: {
-				type: DataTypes.INTEGER
+				type: DataTypes.INTEGER,
 			},
-			category:  {
-				type: DataTypes.STRING
+			category: {
+				type: DataTypes.STRING,
 			},
-			serial: DataTypes.STRING
+			serial: DataTypes.STRING,
 		},
 		{
 			sequelize: sequelizeInstance,
 			modelName: 'Issued',
-		},
+		}
 	);
 	Date_.init(
 		{
@@ -132,7 +133,7 @@ let sequelizeInstance: Sequelize;
 			totalNumber: DataTypes.INTEGER,
 			vendor: DataTypes.STRING,
 			category: DataTypes.STRING,
-			serial: DataTypes.STRING
+			serial: DataTypes.STRING,
 		},
 		{
 			modelName: 'Received',
@@ -159,31 +160,55 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 			},
 			serial: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING,
 			},
-			category: DataTypes.STRING
+			category: DataTypes.STRING,
 		},
 		{
 			sequelize: sequelizeInstance,
 			modelName: 'Stocks',
 		}
 	);
-	Vendor.init({
-		id: {
+	Vendor.init(
+		{
+			id: {
 				type: DataTypes.INTEGER,
 				autoIncrement: true,
 				primaryKey: true,
 			},
-		name: DataTypes.STRING,
-		products: DataTypes.STRING,
-		email: DataTypes.STRING,
-		contact: DataTypes.STRING,
-		user: DataTypes.STRING
-	},
-	{
-		sequelize: sequelizeInstance,
-		modelName: 'Vendors',
-	}),
+			name: DataTypes.STRING,
+			products: DataTypes.STRING,
+			email: DataTypes.STRING,
+			contact: DataTypes.STRING,
+			user: DataTypes.STRING,
+		},
+		{
+			sequelize: sequelizeInstance,
+			modelName: 'Vendors',
+		}
+	),
+		Activity.init(
+			{
+				id: {
+					type: DataTypes.INTEGER,
+					autoIncrement: true,
+					primaryKey: true,
+				},
+				username: DataTypes.STRING,
+				item: DataTypes.STRING,
+				date: DataTypes.STRING,
+				time: DataTypes.STRING,
+				activity: DataTypes.STRING,
+				number: {
+					type: DataTypes.NUMBER,
+					allowNull: true,
+				},
+			},
+			{
+				sequelize: sequelizeInstance,
+				modelName: 'Activity',
+			}
+		);
 	User.init(
 		{
 			id: {
@@ -210,11 +235,13 @@ let sequelizeInstance: Sequelize;
 			tableName: 'User',
 		}
 	);
-await User.sync({});
-	await Issued.sync({});
-	await Received.sync({});
-	await Stock.sync({});
-	await Vendor.sync({});
+	await User.sync();
+	await Issued.sync();
+	await Received.sync();
+	await Stock.sync();
+	await Vendor.sync();
+	await Activity.sync();
+
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

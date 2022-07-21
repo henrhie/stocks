@@ -1,9 +1,10 @@
 import express, { Request, Response } from 'express';
 import { Issued } from '../../models/issued';
-import { Stock } from '../../models/stock'
+import { Stock } from '../../models/stock';
 import { Date as _Date } from '../../models/date';
 import { addToCsv } from '../../utils';
 import { requireAuth } from '../auth/require-auth';
+import { Activity } from '../../models/activity';
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ interface ReqBody {
 	date: string;
 	issuedby: string;
 	issuedto: string;
-	items_issued: number
+	items_issued: number;
 	user: string;
 	category: string;
 	serial: string;
@@ -49,20 +50,29 @@ router.post(
 					await Stock.create({
 						stockName: model_name,
 						date: req.body.date ? req.body.date: date,
+
 						user: req.body.user,
 						serial,
 						totalAvailableNumber: -items_issued,
-						category,
+						category
 					})
 				}
 				else {
-					
 					availableStock.set({
 						...availableStock,
-						totalAvailableNumber: availableStock.totalAvailableNumber - items_issued
-					})
-					await availableStock.save()
+						totalAvailableNumber:
+							availableStock.totalAvailableNumber - items_issued,
+					});
+					await availableStock.save();
 				}
+				await Activity.create({
+					username: req.body.user,
+					date: req.body.date ? req.body.date : date,
+					time: _date.toLocaleTimeString(),
+					activity: 'added item to issued table',
+					item: model_name,
+					number: items_issued,
+				});
 				return res.status(201).send(equipment);
 			})
 			.catch((err) => {
