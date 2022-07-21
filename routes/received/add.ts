@@ -8,7 +8,8 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 interface ReqBody {
-	received_name: string;
+	model_name: string;
+	service_tag: string;
 	receivedby: string;
 	date: string;
 	vendor: string;
@@ -26,18 +27,13 @@ router.post(
 		const date = _date.toLocaleDateString().replace('/', '-').replace('/', '-');
 
 		console.log('req.body ===> ', req.body);
-		const {
-			received_name,
-			category,
-			receivedby,
-			vendor,
-			items_received,
-			user,
-			serial,
-		} = req.body;
+
+		const { model_name,service_tag, category, receivedby, vendor, items_received, user, serial } = req.body
+
 		Received.create({
-			stockName: received_name,
+			stockName: model_name,
 			receivedBy: receivedby,
+			service_tag,
 			vendor,
 			totalNumber: items_received,
 			user,
@@ -47,13 +43,11 @@ router.post(
 		})
 			.then(async (received) => {
 				addToCsv(received);
-				const availableStock = await Stock.findOne({
-					where: { stockName: received_name },
-				});
-				if (!availableStock) {
+		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
+				if(!availableStock) {
 					await Stock.create({
-						stockName: received_name,
-						date: req.body.date ? req.body.date : date,
+						stockName: model_name,
+						date: req.body.date ? req.body.date: date,
 						user,
 						serial,
 						totalAvailableNumber: items_received,
@@ -72,7 +66,7 @@ router.post(
 					date: req.body.date ? req.body.date : date,
 					time: _date.toLocaleTimeString(),
 					activity: 'added item to received table',
-					item: received_name,
+					item: model_name,
 					number: items_received,
 				});
 				return res.status(201).send(received);

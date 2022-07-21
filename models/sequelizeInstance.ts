@@ -71,6 +71,12 @@ let sequelizeInstance: Sequelize;
 			issuedTo: {
 				type: DataTypes.STRING,
 			},
+			service_tag: {
+				type: DataTypes.STRING,
+			},
+			department:{
+				type: DataTypes.STRING,
+			},
 			date: {
 				type: DataTypes.STRING,
 			},
@@ -122,6 +128,7 @@ let sequelizeInstance: Sequelize;
 			receivedBy: {
 				type: DataTypes.STRING,
 			},
+			service_tag: DataTypes.STRING,
 			user: DataTypes.STRING,
 			totalNumber: DataTypes.INTEGER,
 			vendor: DataTypes.STRING,
@@ -234,6 +241,7 @@ let sequelizeInstance: Sequelize;
 	await Stock.sync();
 	await Vendor.sync();
 	await Activity.sync();
+
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

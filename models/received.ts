@@ -11,6 +11,7 @@ class Received extends Model<
 	declare id: CreationOptional<number>;
 	declare stockName: string;
 	declare receivedBy: string;
+	declare service_tag: string;
 	declare date: string;
 	declare user: string;
 	declare totalNumber: number;

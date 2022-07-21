@@ -13,6 +13,8 @@ class Issued extends Model<
 	declare date: string;
 	declare issuedBy: string;
 	declare issuedTo: string;
+	declare service_tag: string;
+	declare department: string;
 	declare total: number;
 	declare user: string;
 	declare category: string;

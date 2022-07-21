@@ -9,7 +9,9 @@ import { Activity } from '../../models/activity';
 const router = express.Router();
 
 interface ReqBody {
-	issue_name: string;
+	model_name: string;
+	service_tag: string;
+	department: string;
 	date: string;
 	issuedby: string;
 	issuedto: string;
@@ -23,36 +25,39 @@ router.post(
 	'/api/issued',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { issue_name, category, issuedby, issuedto, items_issued, serial } =
-			req.body;
+		const { model_name,service_tag, department, category, issuedby, issuedto, items_issued, serial } = req.body
+		const date = new Date()
+			.toLocaleDateString()
+			.replace('/', '-')
+			.replace('/', '-');
 		const _date = new Date();
-		const date = _date.toLocaleDateString().replace('/', '-').replace('/', '-');
 		Issued.create({
 			date: req.body.date ? req.body.date : date,
 			user: req.body.user,
-			stockName: issue_name,
+			stockName: model_name,
 			issuedBy: issuedby,
 			issuedTo: issuedto,
 			total: items_issued,
 			category,
 			serial,
+			service_tag,
+			department
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);
-				const availableStock = await Stock.findOne({
-					where: { stockName: issue_name },
-				});
-				console.log('stock: ', availableStock);
-				if (!availableStock) {
+				const availableStock = await Stock.findOne({ where: { stockName: model_name }})
+				console.log('stock: ', availableStock)
+				if(!availableStock) {
 					await Stock.create({
-						stockName: issue_name,
-						date: req.body.date ? req.body.date : date,
+						stockName: model_name,
+						date: req.body.date ? req.body.date: date,
 						user: req.body.user,
 						serial,
 						totalAvailableNumber: -items_issued,
 						category,
-					});
-				} else {
+					})
+				}
+				else {
 					availableStock.set({
 						...availableStock,
 						totalAvailableNumber:
@@ -65,7 +70,7 @@ router.post(
 					date: req.body.date ? req.body.date : date,
 					time: _date.toLocaleTimeString(),
 					activity: 'added item to issued table',
-					item: issue_name,
+					item: model_name,
 					number: items_issued,
 				});
 				return res.status(201).send(equipment);

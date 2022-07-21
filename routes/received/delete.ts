@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
+import { Issued } from '../../models/issued';
 import { Activity } from '../../models/activity';
 import { Received } from '../../models/received';
+import { Stock } from '../../models/stock';
 import { requireAuth } from '../auth/require-auth';
 
 const router = express.Router();
@@ -15,6 +17,14 @@ router.delete(
 				stockName: name,
 			},
 		});
+		const issued = await Issued.findOne({ where: { stockName: name }})
+		if(!issued) {
+			const _  = await Stock.destroy({ where: { stockName: name }})
+		}
+		else {
+			const totalItem = await Stock.findOne({ where: { stockName: name }})
+			totalItem?.set({ ...totalItem, totalAvailableNumber: issued.total})
+		}
 		const receivedItems = await Received.findAll();
 
 		const _date = new Date();
