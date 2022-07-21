@@ -30,6 +30,7 @@ router.post(
 			.toLocaleDateString()
 			.replace('/', '-')
 			.replace('/', '-');
+		const _date = new Date();
 		Issued.create({
 			date: req.body.date ? req.body.date : date,
 			user: req.body.user,
@@ -50,11 +51,10 @@ router.post(
 					await Stock.create({
 						stockName: model_name,
 						date: req.body.date ? req.body.date: date,
-
 						user: req.body.user,
 						serial,
 						totalAvailableNumber: -items_issued,
-						category
+						category,
 					})
 				}
 				else {
