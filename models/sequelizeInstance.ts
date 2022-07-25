@@ -235,12 +235,12 @@ let sequelizeInstance: Sequelize;
 			tableName: 'User',
 		}
 	);
-	await User.sync({force: true});
-	await Issued.sync({force: true});
-	await Received.sync({force: true});
-	await Stock.sync({force: true});
-	await Vendor.sync({force: true});
-	await Activity.sync({force: true});
+	await User.sync();
+	await Issued.sync();
+	await Received.sync();
+	await Stock.sync();
+	await Vendor.sync();
+	await Activity.sync();
 
 
 	User.beforeCreate(async (user) => {
