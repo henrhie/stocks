@@ -6,13 +6,14 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/received/:name',
+	'/api/received/:user_group/:name',
 	requireAuth,
-	async (req: Request<{ name: string }>, res: Response) => {
-		const { name } = req.params;
+	async (req: Request<{ name: string, user_group: string }>, res: Response) => {
+		const { name, user_group } = req.params;
 		const received_ = await Received.findOne({
 			where: {
-				stockName: name
+				stockName: name,
+				user_group
 			},
 		});
 		if (!received_) {
@@ -23,9 +24,10 @@ router.get(
 );
 
 router.get(
-	'/api/received',
+	'/api/received/:user_group',
 	async (req: Request, res: Response) => {
-		const received = await Received.findAll();
+		const { user_group } = req.params
+		const received = await Received.findAll({ where:{ user_group }});
 		if (!received) {
 			return res.status(401).send('not found');
 		}

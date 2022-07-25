@@ -18,6 +18,7 @@ class Received extends Model<
 	declare vendor: string;
 	declare category: string;
 	declare serial: string;
+	declare user_group: string;
 }
 
 export { Received };

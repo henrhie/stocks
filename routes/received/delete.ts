@@ -8,21 +8,22 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/received/:name',
+	'/api/received/:user_group/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { name } = req.params;
+		const { name, user_group } = req.params;
 		const _ = await Received.destroy({
 			where: {
 				stockName: name,
+				user_group
 			},
 		});
-		const issued = await Issued.findOne({ where: { stockName: name }})
+		const issued = await Issued.findOne({ where: { stockName: name, user_group }})
 		if(!issued) {
-			const _  = await Stock.destroy({ where: { stockName: name }})
+			const _  = await Stock.destroy({ where: { stockName: name, user_group }})
 		}
 		else {
-			const totalItem = await Stock.findOne({ where: { stockName: name }})
+			const totalItem = await Stock.findOne({ where: { stockName: name, user_group }})
 			totalItem?.set({ ...totalItem, totalAvailableNumber: issued.total})
 		}
 		const receivedItems = await Received.findAll();

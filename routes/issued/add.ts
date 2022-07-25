@@ -19,13 +19,24 @@ interface ReqBody {
 	user: string;
 	category: string;
 	serial: string;
+	user_group: string;
 }
 
 router.post(
-	'/api/issued',
+	'/api/issued/:user_group',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { model_name,service_tag, department, category, issuedby, issuedto, items_issued, serial } = req.body
+		const {
+			model_name,
+			service_tag,
+			department,
+			category,
+			issuedby,
+			issuedto,
+			items_issued,
+			serial,
+			user_group,
+		} = req.body;
 		const date = new Date()
 			.toLocaleDateString()
 			.replace('/', '-')
@@ -41,23 +52,26 @@ router.post(
 			category,
 			serial,
 			service_tag,
-			department
+			department,
+			user_group,
 		})
 			.then(async (equipment) => {
 				addToCsv(equipment);
-				const availableStock = await Stock.findOne({ where: { stockName: model_name }})
-				console.log('stock: ', availableStock)
-				if(!availableStock) {
+				const availableStock = await Stock.findOne({
+					where: { stockName: model_name, user_group },
+				});
+				console.log('stock: ', availableStock);
+				if (!availableStock) {
 					await Stock.create({
 						stockName: model_name,
-						date: req.body.date ? req.body.date: date,
+						date: req.body.date ? req.body.date : date,
 						user: req.body.user,
 						serial,
 						totalAvailableNumber: -items_issued,
 						category,
-					})
-				}
-				else {
+						user_group,
+					});
+				} else {
 					availableStock.set({
 						...availableStock,
 						totalAvailableNumber:

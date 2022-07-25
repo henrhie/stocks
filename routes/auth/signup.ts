@@ -9,6 +9,7 @@ interface ReqBody {
 	username: string;
 	password: string;
 	access_level: string;
+	user_group: string;
 }
 
 const router = express.Router();
@@ -16,7 +17,7 @@ const router = express.Router();
 router.post(
 	'/api/users/signup',
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
-		const { name, username, password, access_level } = req.body;
+		const { name, username, password, access_level,user_group } = req.body;
 
 		try {
 			const existingUser = await User.findOne({ where: { username } });
@@ -32,6 +33,7 @@ router.post(
 			username,
 			password,
 			access_level,
+			user_group
 		})
 			.then((user) => {
 				const userJwt = jwt.sign(
@@ -40,6 +42,7 @@ router.post(
 						username: user.username,
 						name: name,
 						access_level: user.access_level,
+						user_group: user.user_group
 					},
 					token
 				);

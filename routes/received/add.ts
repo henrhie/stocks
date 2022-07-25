@@ -17,10 +17,11 @@ interface ReqBody {
 	user: string;
 	category: string;
 	serial: string;
+	user_group: string;
 }
 
 router.post(
-	'/api/received',
+	'/api/received/:user_group',
 	requireAuth,
 	async (req: Request<{}, {}, ReqBody>, res: Response) => {
 		const _date = new Date();
@@ -28,7 +29,17 @@ router.post(
 
 		console.log('req.body ===> ', req.body);
 
-		const { model_name,service_tag, category, receivedby, vendor, items_received, user, serial } = req.body
+		const {
+			model_name,
+			service_tag,
+			category,
+			receivedby,
+			vendor,
+			items_received,
+			user,
+			user_group,
+			serial,
+		} = req.body;
 
 		Received.create({
 			stockName: model_name,
@@ -40,18 +51,22 @@ router.post(
 			date: req.body.date ? req.body.date : date,
 			category,
 			serial,
+			user_group,
 		})
 			.then(async (received) => {
 				addToCsv(received);
-		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
-				if(!availableStock) {
+				const availableStock = await Stock.findOne({
+					where: { stockName: model_name, user_group },
+				});
+				if (!availableStock) {
 					await Stock.create({
 						stockName: model_name,
-						date: req.body.date ? req.body.date: date,
+						date: req.body.date ? req.body.date : date,
 						user,
 						serial,
 						totalAvailableNumber: items_received,
 						category,
+						user_group,
 					});
 				} else {
 					availableStock.set({

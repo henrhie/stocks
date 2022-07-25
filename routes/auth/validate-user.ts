@@ -1,21 +1,7 @@
+import { UserPayload } from './current-user';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { token } from '../../env/secrets';
-
-declare global {
-	namespace Express {
-		interface Request {
-			currentUser?: UserPayload;
-		}
-	}
-}
-
-interface UserPayload {
-	name: string;
-	id: string;
-	username: string;
-	access_level: string;
-}
 
 export const validateUser = (
 	req: Request,

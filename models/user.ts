@@ -13,6 +13,7 @@ interface UserAttributes {
 	username: string;
 	password: string;
 	access_level: string;
+	user_group: string;
 }
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -21,6 +22,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 	declare username: string;
 	declare password: string;
 	declare access_level: string;
+	declare user_group: string;
 }
 
 export { User };

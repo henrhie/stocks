@@ -20,19 +20,21 @@ interface ReqBody {
 }
 
 router.put(
-	'/api/received/:name',
+	'/api/received/:user_group/:name',
 	requireAuth,
-	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
-		const { name } = req.params;
+	async (req: Request<{ name: string, user_group: string }, {}, ReqBody>, res: Response) => {
+		const { name, user_group } = req.params;
 		console.log('name: ', name)
 		const issued_ = await Issued.findOne({
 			where: {
 				stockName: name,
+				user_group
 			},
 		});
 		const received_ = await Received.findOne({
 			where: {
 				stockName: name,
+				user_group
 			},
 		});
 		if (!issued_ && !received_) {
@@ -41,7 +43,7 @@ router.put(
 
 		const { model_name, service_tag, category, receivedby, vendor, items_received, user, date, serial } = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
+		const availableStock = await Stock.findOne({ where: { stockName: model_name, user_group }})
 
 		const newTotal = items_received - (issued_ ? issued_.total : 0);
 		console.log('new total: ', newTotal);

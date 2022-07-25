@@ -32,6 +32,7 @@ router.post(
 				username: user.username,
 				name: user.name,
 				access_level: user.access_level,
+				user_group: user.user_group
 			},
 			token
 		);

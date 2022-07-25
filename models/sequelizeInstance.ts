@@ -74,7 +74,7 @@ let sequelizeInstance: Sequelize;
 			service_tag: {
 				type: DataTypes.STRING,
 			},
-			department:{
+			department: {
 				type: DataTypes.STRING,
 			},
 			date: {
@@ -90,6 +90,7 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 			},
 			serial: DataTypes.STRING,
+			user_group: DataTypes.STRING,
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -134,6 +135,7 @@ let sequelizeInstance: Sequelize;
 			vendor: DataTypes.STRING,
 			category: DataTypes.STRING,
 			serial: DataTypes.STRING,
+			user_group: DataTypes.STRING,
 		},
 		{
 			modelName: 'Received',
@@ -163,6 +165,7 @@ let sequelizeInstance: Sequelize;
 				type: DataTypes.STRING,
 			},
 			category: DataTypes.STRING,
+			user_group: DataTypes.STRING,
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -228,6 +231,7 @@ let sequelizeInstance: Sequelize;
 			access_level: {
 				type: DataTypes.STRING,
 			},
+			user_group: DataTypes.STRING,
 		},
 		{
 			sequelize: sequelizeInstance,
@@ -236,12 +240,11 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await Issued.sync();
-	await Received.sync();
-	await Stock.sync();
-	await Vendor.sync();
-	await Activity.sync();
-
+	await Issued.sync({ force: true });
+	await Received.sync({ force: true });
+	await Stock.sync({ force: true });
+	await Vendor.sync({ force: true });
+	await Activity.sync({ force: true });
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

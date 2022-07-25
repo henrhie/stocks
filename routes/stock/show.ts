@@ -6,10 +6,11 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/stock',
+	'/api/stock/:user_group',
 	requireAuth,
-	async (req: Request<{ }>, res: Response) => {
-		const stock = await Stock.findAll();
+	async (req: Request, res: Response) => {
+		const { user_group } = req.params
+		const stock = await Stock.findAll({ where: { user_group }} );
 		return res.send(stock);
 	}
 );

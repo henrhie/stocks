@@ -14,14 +14,14 @@ interface ReqBody {
 	date: string;
 	issuedby: string;
 	issuedto: string;
-	items_issued: number
+	items_issued: number;
 	user: string;
 	category: string;
 	serial: string;
 }
 
 router.put(
-	'/api/issued/:name',
+	'/api/issued/:user_group/:name',
 	requireAuth,
 	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
 		const { name } = req.params;
@@ -42,18 +42,21 @@ router.put(
 			service_tag,
 			items_issued,
 			category,
-			serial
+			serial,
 		} = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: model_name }})
+		const availableStock = await Stock.findOne({
+			where: { stockName: model_name },
+		});
 		availableStock?.set({
 			stockName: model_name,
 			date,
 			user,
 			serial: '',
 			category,
-			totalAvailableNumber: (availableStock.totalAvailableNumber + issued.total) - items_issued
-		})
+			totalAvailableNumber:
+				availableStock.totalAvailableNumber + issued.total - items_issued,
+		});
 		await availableStock?.save();
 		issued.set({
 			stockName: model_name,
@@ -65,7 +68,7 @@ router.put(
 			date,
 			service_tag,
 			department,
-			total: items_issued
+			total: items_issued,
 		});
 
 		const _date = new Date();
