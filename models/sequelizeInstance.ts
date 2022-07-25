@@ -200,7 +200,7 @@ let sequelizeInstance: Sequelize;
 				time: DataTypes.STRING,
 				activity: DataTypes.STRING,
 				number: {
-					type: DataTypes.NUMBER,
+					type: DataTypes.INTEGER,
 					allowNull: true,
 				},
 			},
@@ -235,12 +235,12 @@ let sequelizeInstance: Sequelize;
 			tableName: 'User',
 		}
 	);
-	await User.sync();
-	await Issued.sync();
-	await Received.sync();
-	await Stock.sync();
-	await Vendor.sync();
-	await Activity.sync();
+	await User.sync({force: true});
+	await Issued.sync({force: true});
+	await Received.sync({force: true});
+	await Stock.sync({force: true});
+	await Vendor.sync({force: true});
+	await Activity.sync({force: true});
 
 
 	User.beforeCreate(async (user) => {
