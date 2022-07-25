@@ -19,6 +19,7 @@ class Issued extends Model<
 	declare user: string;
 	declare category: string;
 	declare serial: string;
+	declare user_group: string;
 }
 
 export { Issued };

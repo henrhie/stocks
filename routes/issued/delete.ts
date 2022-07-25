@@ -8,21 +8,23 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/issued/:name',
+	'/api/issued/:user_group/:name',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { name } = req.params;
+		const { name, user_group } = req.params;
 
 		const issuedNumber = await Issued.destroy({
-			where: { stockName: name },
+			where: { stockName: name, user_group },
 		});
-		const received = await Received.findOne({ where: { stockName: name }})
-		if(!received) {
-			const _  = await Stock.destroy({ where: { stockName: name }})
-		}
-		else {
-			const totalItem = await Stock.findOne({ where: { stockName: name }})
-			totalItem?.set({ ...totalItem, totalAvailableNumber: received.totalNumber})
+		const received = await Received.findOne({ where: { stockName: name } });
+		if (!received) {
+			const _ = await Stock.destroy({ where: { stockName: name } });
+		} else {
+			const totalItem = await Stock.findOne({ where: { stockName: name } });
+			totalItem?.set({
+				...totalItem,
+				totalAvailableNumber: received.totalNumber,
+			});
 		}
 		const _date = new Date();
 		const date = _date.toLocaleDateString().replace('/', '-').replace('/', '-');
