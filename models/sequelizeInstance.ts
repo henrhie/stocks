@@ -239,12 +239,12 @@ let sequelizeInstance: Sequelize;
 			tableName: 'User',
 		}
 	);
-	await User.sync();
+	await User.sync({ force: true });
 	await Issued.sync({ force: true });
 	await Received.sync({ force: true });
-	await Stock.sync();
-	await Vendor.sync();
-	await Activity.sync();
+	await Stock.sync({ force: true });
+	await Vendor.sync({ force: true });
+	await Activity.sync({ force: true });
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);
