@@ -16,7 +16,8 @@ interface ReqBody {
 	items_received: number;
 	user: string;
 	category: string,
-	serial: string
+	serial: string,
+	user_group: string
 }
 
 router.put(
@@ -24,7 +25,7 @@ router.put(
 	requireAuth,
 	async (req: Request<{ name: string, user_group: string }, {}, ReqBody>, res: Response) => {
 		const { name, user_group } = req.params;
-		console.log('name: ', name)
+		// console.log('name: ', name)
 		const issued_ = await Issued.findOne({
 			where: {
 				stockName: name,
@@ -41,7 +42,7 @@ router.put(
 			return res.status(401).send('item does not exist');
 		}
 
-		const { model_name, service_tag, category, receivedby, vendor, items_received, user, date, serial } = req.body;
+		const { model_name, receivedby, vendor, items_received, user, date, serial } = req.body;
 
 		const availableStock = await Stock.findOne({ where: { stockName: model_name, user_group }})
 

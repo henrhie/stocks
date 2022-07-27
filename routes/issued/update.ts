@@ -18,15 +18,16 @@ interface ReqBody {
 	user: string;
 	category: string;
 	serial: string;
+	user_group: string;
 }
 
 router.put(
 	'/api/issued/:user_group/:name',
 	requireAuth,
-	async (req: Request<{ name: string }, {}, ReqBody>, res: Response) => {
-		const { name } = req.params;
+	async (req: Request<{ name: string, user_group: string },{}, ReqBody>, res: Response) => {
+		const { name, user_group } = req.params;
 		const issued = await Issued.findOne({
-			where: { stockName: name },
+			where: { stockName: name, user_group },
 		});
 		if (!issued) {
 			throw new Error('equipment does not exist');
@@ -42,11 +43,11 @@ router.put(
 			service_tag,
 			items_issued,
 			category,
-			serial,
+			serial
 		} = req.body;
 
 		const availableStock = await Stock.findOne({
-			where: { stockName: model_name },
+			where: { stockName: model_name, user_group },
 		});
 		availableStock?.set({
 			stockName: model_name,
@@ -69,6 +70,7 @@ router.put(
 			service_tag,
 			department,
 			total: items_issued,
+			user_group
 		});
 
 		const _date = new Date();

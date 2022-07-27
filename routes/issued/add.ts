@@ -37,10 +37,7 @@ router.post(
 			serial,
 			user_group,
 		} = req.body;
-		const date = new Date()
-			.toLocaleDateString()
-			.replace('/', '-')
-			.replace('/', '-');
+		const date = new Date().toLocaleDateString().replace('/', '-').replace('/', '-');
 		const _date = new Date();
 		Issued.create({
 			date: req.body.date ? req.body.date : date,
