@@ -15,6 +15,7 @@ interface UserPayload {
 	id: string;
 	username: string;
 	access_level: string;
+	user_group: string;
 }
 
 export const validateUser = (
