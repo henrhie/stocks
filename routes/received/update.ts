@@ -17,24 +17,24 @@ interface ReqBody {
 	user: string;
 	category: string,
 	serial: string,
-	user_group: string
+	user_group: string;
 }
 
 router.put(
-	'/api/received/:user_group/:name',
+	'/api/received/:user_group/:stockName',
 	requireAuth,
-	async (req: Request<{ name: string, user_group: string }, {}, ReqBody>, res: Response) => {
-		const { name, user_group } = req.params;
+	async (req: Request<{ stockName: string, user_group: string }, {}, ReqBody>, res: Response) => {
+		const { stockName, user_group } = req.params;
 		// console.log('name: ', name)
 		const issued_ = await Issued.findOne({
 			where: {
-				stockName: name,
+				stockName,
 				user_group
 			},
 		});
 		const received_ = await Received.findOne({
 			where: {
-				stockName: name,
+				stockName,
 				user_group
 			},
 		});
@@ -42,15 +42,15 @@ router.put(
 			return res.status(401).send('item does not exist');
 		}
 
-		const { model_name, receivedby, vendor, items_received, user, date, serial } = req.body;
+		const { model_name, receivedby, vendor, items_received, user, date, serial,  } = req.body;
 
-		const availableStock = await Stock.findOne({ where: { stockName: model_name, user_group }})
+		const availableStock = await Stock.findOne({ where: { stockName, user_group }})
 
 		const newTotal = items_received - (issued_ ? issued_.total : 0);
 		console.log('new total: ', newTotal);
 		console.log('items received: ', items_received);
 		availableStock?.set({
-			stockName: model_name,
+			stockName,
 			date,
 			user,
 			serial,
@@ -80,7 +80,7 @@ router.put(
 			date: _date_,
 			time: _date.toLocaleTimeString(),
 			activity: 'updated item on received table',
-			item: name,
+			item: issued_?.stockName || '',
 			number: items_received,
 		});
 		return res.send(received_);

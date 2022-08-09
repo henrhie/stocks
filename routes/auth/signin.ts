@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { Password } from '../../services/password';
 import { User } from '../../models/user';
 import { token } from '../../env/secrets';
+import { Activity } from '../../models/activity'
 
 interface ReqBody {
 	username: string;
@@ -36,8 +37,18 @@ router.post(
 			},
 			token
 		);
+		const date = new Date().toLocaleDateString().replace('/', '-').replace('/', '-');
+		const _date = new Date();
 		// req.session = { jwt: userJwt };
 		user.password = '';
+		await Activity.create({
+			username: user.username,
+			date,
+			time: _date.toLocaleTimeString(),
+			activity: 'user signed in',
+			item: '',
+			number: 0,
+		});
 		return res.status(201).send({ user, token: userJwt });
 	}
 );

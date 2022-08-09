@@ -6,12 +6,12 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.get(
-	'/api/issued/:user_group/:name',
+	'/api/issued/:user_group/:stockName',
 	requireAuth,
-	async (req: Request<{ name: string; user_group: string }>, res: Response) => {
-		const { name, user_group } = req.params;
+	async (req: Request<{ stockName: string; user_group: string }>, res: Response) => {
+		const { stockName, user_group } = req.params;
 		const issued = await Issued.findOne({
-			where: { stockName: name, user_group },
+			where: { stockName, user_group },
 		});
 		console.log(issued);
 		if (!issued) {

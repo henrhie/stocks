@@ -8,19 +8,20 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/issued/:user_group/:name',
+	'/api/issued/:user_group/:stockName',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { name, user_group } = req.params;
+		const { stockName, user_group } = req.params;
 
 		const issuedNumber = await Issued.destroy({
-			where: { stockName: name, user_group },
+			where: { stockName, user_group },
 		});
-		const received = await Received.findOne({ where: { stockName: name, user_group } });
+		const received = await Received.findOne({ where: { stockName, user_group } });
+		const name = received?.stockName
 		if (!received) {
-			const _ = await Stock.destroy({ where: { stockName: name, user_group } });
+			const _ = await Stock.destroy({ where: { stockName, user_group } });
 		} else {
-			const totalItem = await Stock.findOne({ where: { stockName: name, user_group } });
+			const totalItem = await Stock.findOne({ where: { stockName, user_group } });
 			totalItem?.set({
 				...totalItem,
 				totalAvailableNumber: received.totalNumber,
@@ -33,7 +34,7 @@ router.delete(
 			date,
 			time: _date.toLocaleTimeString(),
 			activity: 'deleted item from issued table',
-			item: name,
+			item: name || '',
 		});
 		const remainingIssues = await Issued.findAll();
 		res.send({ issued: remainingIssues });

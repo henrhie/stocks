@@ -8,22 +8,22 @@ import { requireAuth } from '../auth/require-auth';
 const router = express.Router();
 
 router.delete(
-	'/api/received/:user_group/:name',
+	'/api/received/:user_group/:stockName',
 	requireAuth,
 	async (req: Request, res: Response) => {
-		const { name, user_group } = req.params;
+		const { stockName, user_group } = req.params;
 		const _ = await Received.destroy({
 			where: {
-				stockName: name,
+				stockName,
 				user_group
 			},
 		});
-		const issued = await Issued.findOne({ where: { stockName: name, user_group }})
+		const issued = await Issued.findOne({ where: { stockName, user_group }})
 		if(!issued) {
-			const _  = await Stock.destroy({ where: { stockName: name, user_group }})
+			const _  = await Stock.destroy({ where: { stockName, user_group }})
 		}
 		else {
-			const totalItem = await Stock.findOne({ where: { stockName: name, user_group }})
+			const totalItem = await Stock.findOne({ where: { stockName, user_group }})
 			totalItem?.set({ ...totalItem, totalAvailableNumber: issued.total})
 		}
 		const receivedItems = await Received.findAll();
@@ -35,7 +35,7 @@ router.delete(
 			date,
 			time: _date.toLocaleTimeString(),
 			activity: 'deleted item from received table',
-			item: name,
+			item: issued?.stockName || '',
 		});
 		return res.send({ received: receivedItems });
 	}

@@ -21,8 +21,9 @@ router.post(
 		user.set({
 			password: await Password.toHash(newPass),
 		});
-		return res.status(201).send('success');
+		await user.save()
+		return res.status(201).send({ message: 'success'});
 	}
 );
 
-export { router as showUserRouter };
+export { router as changePassRouter };

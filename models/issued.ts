@@ -10,6 +10,7 @@ class Issued extends Model<
 > {
 	declare id: CreationOptional<number>;
 	declare stockName: string;
+	// declare unique: string;
 	declare date: string;
 	declare issuedBy: string;
 	declare issuedTo: string;
