@@ -9,6 +9,7 @@ import { Received } from './received';
 import { Password } from '../services/password';
 import { Vendor } from './vendor';
 import { Activity } from './activity';
+import { Category } from './category';
 
 const { DATABASE, HOST, USER, PASSWORD, INSTANCE_NAME } = process.env;
 
@@ -191,6 +192,22 @@ let sequelizeInstance: Sequelize;
 			modelName: 'Vendors',
 		}
 	),
+	Category.init(
+		{
+			id: {
+				type: DataTypes.INTEGER,
+				autoIncrement: true,
+				primaryKey: true,
+			},
+			cat_name: DataTypes.STRING,
+			user_group: DataTypes.STRING,
+			user: DataTypes.STRING,
+		},
+		{
+			sequelize: sequelizeInstance,
+			modelName: 'Category',
+		}
+	),
 		Activity.init(
 			{
 				id: {
@@ -241,11 +258,12 @@ let sequelizeInstance: Sequelize;
 		}
 	);
 	await User.sync();
-	await Issued.sync({force: true});
-	await Received.sync({force: true});
-	await Stock.sync({force: true});
-	await Vendor.sync({force: true});
-	await Activity.sync({force: true});
+	await Issued.sync();
+	await Received.sync();
+	await Stock.sync();
+	await Vendor.sync();
+	await Activity.sync();
+	await Category.sync();
 
 	User.beforeCreate(async (user) => {
 		const hashed = await Password.toHash(user.password);

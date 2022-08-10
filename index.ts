@@ -37,6 +37,12 @@ import { showVendorsRouter } from './routes/vendor/show';
 import { deleteVendorRouter } from './routes/vendor/delete';
 import { showActivitiesRouter } from './routes/activity/show';
 import { changePassRouter } from './routes/auth/change-pass';
+import { addCategoryRouter } from './routes/category/add';
+import { showCategorysRouter } from './routes/category/show';
+import { deleteCategoryRouter } from './routes/category/delete';
+
+
+
 
 const app = express();
 
@@ -75,6 +81,10 @@ app.use(csvRouter);
 app.use(updateStockRouter);
 
 app.use(showActivitiesRouter);
+
+app.use(addCategoryRouter);
+app.use(deleteCategoryRouter);
+app.use(showCategorysRouter);
 
 // app.use(express.static(path.join(__dirname, '_static')));
 // app.get('*', function (req, res) {
